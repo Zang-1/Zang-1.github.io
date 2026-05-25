@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Báº£o Giang - IT Student at VÄƒn Lang University. Passionate about technology, motorcycles, and billiards. No Pain No Gain.">
+    <meta name="keywords" content="Báº£o Giang, IT Student, VÄƒn Lang University, Portfolio">
+    <meta name="author" content="Báº£o Giang">
+    <title>Báº£o Giang â€” IT Student | No Pain No Gain</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-text">BG</span>
+                <span class="logo-dot">.</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#music" class="nav-link">Music</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#hobbies" class="nav-link">Hobbies</a></li>
+                <li><a href="#timeline" class="nav-link">Timeline</a></li>
+                <li><a href="#goals" class="nav-link">Goals</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-effects">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+            <div class="grid-overlay"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>Available for opportunities</span>
+                </div>
+                <h1 class="hero-name">
+                    <span class="greeting">Hey, I'm</span>
+                    <span class="name-highlight">Báº£o Giang</span>
+                </h1>
+                <div class="hero-title">
+                    <span class="title-prefix">&lt;</span>
+                    <span class="typing-text" id="typingText"></span>
+                    <span class="cursor">|</span>
+                    <span class="title-suffix">/&gt;</span>
+                </div>
+                <p class="hero-tagline">" No Pain No Gain "</p>
+                <div class="hero-socials">
+                    <a href="https://www.facebook.com/gain.baor" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/it.young_/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@it_young_?_r=1&_t=ZS-96exAtHUV9U" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://locket.cam/itz_young" target="_blank" rel="noopener" class="social-link" aria-label="Locket">
+                        <i class="fas fa-camera"></i>
+                    </a>
+                </div>
+                <a href="#contact" class="hero-cta">
+                    <span>Get in Touch</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="hero-avatar-wrapper">
+                <div class="avatar-glow"></div>
+                <div class="avatar-ring"></div>
+                <img src="C:\Users\ADMIN\OneDrive\Hình ảnh\yeah.png" alt="Báº£o Giang" class="hero-avatar">
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- ===== MUSIC SECTION ===== -->
+    <section class="section music" id="music">
+        <div class="section-container">
+            <div class="section-header" data-reveal>
+                <span class="section-tag">// what i listen to</span>
+                <h2 class="section-title">My <span class="gradient-text">Music</span></h2>
+            </div>
+            <div class="music-wrapper glass-card" data-reveal>
+                <div class="music-visual">
+                    <div class="equalizer">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <p class="music-label">Currently Vibing To</p>
+                </div>
+                <!-- ===== CHANGE SPOTIFY TRACK HERE ===== -->
+                <div class="spotify-embed">
+                    <iframe 
+                        id="spotifyEmbed"
+                        style="border-radius:12px" 
+                        src="https://open.spotify.com/embed/track/5sGQvC7sIYbYjD1WSLS0bE?utm_source=generator&theme=0" 
+                        width="100%" 
+                        height="152" 
+                        frameBorder="0" 
+                        allowfullscreen="" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <!-- ===== END SPOTIFY ===== -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT SECTION ===== -->
+    <section class="section about" id="about">
+        <div class="section-container">
+            <div class="section-header" data-reveal>
+                <span class="section-tag">// who am i</span>
+                <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-card glass-card" data-reveal>
+                    <div class="about-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Student</h3>
+                    <p>Currently studying Information Technology at <strong>VÄƒn Lang University</strong>, passionate about exploring the world of tech and building cool things with code.</p>
+                </div>
+                <div class="about-card glass-card" data-reveal>
+                    <div class="about-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Passions</h3>
+                    <p>When I'm not coding, you'll find me playing <strong>billiards</strong>, riding my <strong>motorcycle</strong> through the city, or creating content for social media.</p>
+                </div>
+                <div class="about-card glass-card" data-reveal>
+                    <div class="about-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Based in</h3>
+                    <p><strong>Ho Chi Minh City, Vietnam</strong> â€” the vibrant city that never sleeps. Living life to the fullest, one day at a time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOBBIES SECTION ===== -->
+    <section class="section hobbies" id="hobbies">
+        <div class="section-container">
+            <div class="section-header" data-reveal>
+                <span class="section-tag">// what i love</span>
+                <h2 class="section-title">My <span class="gradient-text">Hobbies</span></h2>
+            </div>
+            <div class="hobbies-grid">
+                <div class="hobby-card glass-card" data-reveal>
+                    <div class="hobby-icon-wrapper">
+                        <div class="hobby-icon">đŸ±</div>
+                    </div>
+                    <h3>Billiards</h3>
+                    <p>Nothing beats the focus and precision of a perfect shot. Billiards is where strategy meets skill â€” my favorite way to unwind and challenge myself.</p>
+                    <div class="hobby-tag">Strategy & Focus</div>
+                </div>
+                <div class="hobby-card glass-card" data-reveal>
+                    <div class="hobby-icon-wrapper">
+                        <div class="hobby-icon">đŸï¸</div>
+                    </div>
+                    <h3>Motorcycles</h3>
+                    <p>The thrill of the open road, the sound of the engine â€” riding is freedom. Exploring new routes and enjoying every mile on my dream bike.</p>
+                    <div class="hobby-tag">Adventure & Freedom</div>
+                </div>
+                <div class="hobby-card glass-card" data-reveal>
+                    <div class="hobby-icon-wrapper">
+                        <div class="hobby-icon">đŸ¬</div>
+                    </div>
+                    <h3>Content Creation</h3>
+                    <p>Capturing moments, creating stories. From TikTok to Instagram, I love sharing my daily life and inspiring others through visual content.</p>
+                    <div class="hobby-tag">Creative & Social</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== TIMELINE SECTION ===== -->
+    <section class="section timeline-section" id="timeline">
+        <div class="section-container">
+            <div class="section-header" data-reveal>
+                <span class="section-tag">// my journey</span>
+                <h2 class="section-title">Life <span class="gradient-text">Timeline</span></h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">April 2024</span>
+                        <h3>đŸ‚ Dream Bike Birthday Gift</h3>
+                        <p>Received my dream motorcycle as a birthday gift â€” the beginning of a new adventure on two wheels.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">June 2024</span>
+                        <h3>đŸ“ High School Graduation</h3>
+                        <p>Successfully graduated from high school, closing one chapter and opening the door to new possibilities.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">September 2024</span>
+                        <h3>đŸ« Enrolled at VÄƒn Lang University</h3>
+                        <p>Started my journey in Information Technology at VÄƒn Lang University â€” ready to build the future with code.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">January 2025</span>
+                        <h3>âœ… Completed First Semester</h3>
+                        <p>Finished my first semester of university, adapting to college life and diving deeper into the world of IT.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">Mid 2025</span>
+                        <h3>đŸ“± Started Content Creation</h3>
+                        <p>Began creating content on social media, sharing my daily life, motorcycle rides, and tech experiences.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">Early 2026</span>
+                        <h3>đŸ¥ Vlogging Journey Begins</h3>
+                        <p>Took content creation to the next level â€” started vlogging and documenting my life as an IT student and motorcycle enthusiast.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">April 2026</span>
+                        <h3>đŸ“· Purchased DJI Action 4</h3>
+                        <p>Upgraded my gear with the DJI Action 4 â€” ready to capture every adventure in cinematic quality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GOALS SECTION ===== -->
+    <section class="section goals" id="goals">
+        <div class="section-container">
+            <div class="section-header" data-reveal>
+                <span class="section-tag">// where i'm heading</span>
+                <h2 class="section-title">Future <span class="gradient-text">Goals</span></h2>
+            </div>
+            <div class="goals-grid">
+                <div class="goal-card glass-card" data-reveal>
+                    <div class="goal-number">01</div>
+                    <div class="goal-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Graduate with Honors</h3>
+                    <p>Earn a degree with distinction from VÄƒn Lang University â€” the result of dedication and hard work.</p>
+                    <div class="goal-status">
+                        <span class="status-dot in-progress"></span>
+                        In Progress
+                    </div>
+                </div>
+                <div class="goal-card glass-card" data-reveal>
+                    <div class="goal-number">02</div>
+                    <div class="goal-icon"><i class="fas fa-video"></i></div>
+                    <h3>Become a Vlogger</h3>
+                    <p>Build a community through authentic storytelling â€” sharing my journey, adventures, and experiences with the world.</p>
+                    <div class="goal-status">
+                        <span class="status-dot in-progress"></span>
+                        In Progress
+                    </div>
+                </div>
+                <div class="goal-card glass-card" data-reveal>
+                    <div class="goal-number">03</div>
+                    <div class="goal-icon"><i class="fas fa-id-card"></i></div>
+                    <h3>Get a Driver's License</h3>
+                    <p>Obtain a car driving license â€” unlocking new roads and expanding my horizons beyond two wheels.</p>
+                    <div class="goal-status">
+                        <span class="status-dot upcoming"></span>
+                        Upcoming
+                    </div>
+                </div>
+                <div class="goal-card glass-card" data-reveal>
+                    <div class="goal-number">04</div>
+                    <div class="goal-icon"><i class="fas fa-car"></i></div>
+                    <h3>Own a Car</h3>
+                    <p>A symbol of achievement â€” owning my dream car through hard work and perseverance.</p>
+                    <div class="goal-status">
+                        <span class="status-dot upcoming"></span>
+                        Future Dream
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section class="section contact" id="contact">
+        <div class="section-container">
+            <div class="section-header" data-reveal>
+                <span class="section-tag">// let's connect</span>
+                <h2 class="section-title">Get in <span class="gradient-text">Touch</span></h2>
+            </div>
+            <div class="contact-wrapper" data-reveal>
+                <div class="contact-info glass-card">
+                    <h3>Let's talk about everything!</h3>
+                    <p>Don't hesitate to reach out. Whether it's a project, collaboration, or just a friendly hello â€” I'd love to hear from you.</p>
+                    <div class="contact-details">
+                        <a href="mailto:giangbao041@gmail.com" class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">giangbao041@gmail.com</span>
+                            </div>
+                        </a>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <span class="contact-label">Location</span>
+                                <span class="contact-value">Ho Chi Minh City, Vietnam</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://www.facebook.com/gain.baor" target="_blank" rel="noopener" class="contact-social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/it.young_/" target="_blank" rel="noopener" class="contact-social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@it_young_?_r=1&_t=ZS-96exAtHUV9U" target="_blank" rel="noopener" class="contact-social-link" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://locket.cam/itz_young" target="_blank" rel="noopener" class="contact-social-link" aria-label="Locket">
+                            <i class="fas fa-camera"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Báº£o Giang. All rights reserved.</p>
+            <p class="footer-tagline">Built with <span class="heart">â¤ï¸</span> and lots of coffee.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
