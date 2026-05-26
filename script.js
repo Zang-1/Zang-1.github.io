@@ -391,33 +391,26 @@ function initInteractiveBackgroundPlexus() {
                 if (this.alpha > this.targetAlpha) this.alpha = this.targetAlpha;
             }
 
-            // Apply magnetic attraction to mouse cursor if mouse is nearby and particle is healthy
+            // Apply fluid repulsion from mouse cursor if mouse is nearby and particle is healthy
             if (mouse.active && this.life > 50) {
-                const dx = mouse.x - this.x;
-                const dy = mouse.y - this.y;
+                const dx = this.x - mouse.x; // Vector pointing away from mouse
+                const dy = this.y - mouse.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < 20) {
-                    // Too close to mouse, initiate absorption and fade out
-                    this.alpha -= 0.05;
-                    if (this.alpha <= 0) {
-                        this.reset(true); // Respawn at the edge
-                    }
-                } else if (dist < magneticRadius) {
-                    // Attraction force decreases with distance
-                    const force = (magneticRadius - dist) / magneticRadius;
+                const repelRadius = 140; // Radius of influence around cursor
+                const repelStrength = 0.8; // Force strength of push
+
+                if (dist < repelRadius) {
+                    // Force is strongest at the center and decays linearly to the outer radius
+                    const force = (repelRadius - dist) / repelRadius;
                     
-                    // Gravitational pull force vector
-                    const pullX = (dx / dist) * force * magneticStrength;
-                    const pullY = (dy / dist) * force * magneticStrength;
+                    // Acceleration away from mouse
+                    const pushX = (dx / (dist || 1)) * force * repelStrength;
+                    const pushY = (dy / (dist || 1)) * force * repelStrength;
 
-                    // Tangent orbital force to create swirling effect (perpendicular to pull)
-                    const perpX = (-dy / dist) * force * orbitalStrength;
-                    const perpY = (dx / dist) * force * orbitalStrength;
-
-                    // Apply physics forces
-                    this.vx += pullX + perpX;
-                    this.vy += pullY + perpY;
+                    // Apply physics forces (flows away like fluid)
+                    this.vx += pushX;
+                    this.vy += pushY;
                 }
             }
 
