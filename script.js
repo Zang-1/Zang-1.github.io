@@ -247,7 +247,7 @@ function initInteractiveBackgroundPlexus() {
     const ctx = canvas.getContext('2d');
     
     // 2. Mouse/Touch Coordinates Tracking
-    let mouse = { x: -1000, y: -1000, active: false };
+    let mouse = { x: -1000, y: -1000, active: false, vx: 0, vy: 0, lastX: -1000, lastY: -1000 };
     const supportsHover = window.matchMedia("(hover: hover)").matches;
 
     if (supportsHover) {
@@ -397,16 +397,23 @@ function initInteractiveBackgroundPlexus() {
                 const dy = this.y - mouse.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                const repelRadius = 140; // Radius of influence around cursor
-                const repelStrength = 0.8; // Force strength of push
+                const repelRadius = 80; // Compact radius like a pillow
 
                 if (dist < repelRadius) {
                     // Force is strongest at the center and decays linearly to the outer radius
                     const force = (repelRadius - dist) / repelRadius;
                     
+                    // Real-time mouse speed calculation
+                    const mouseSpeed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
+                    
+                    // Momentum transfer: soft nudge when static, strong impulse when swiped
+                    const baseStrength = 0.15; // Gentle displacement for quiet hover
+                    const speedInfluence = 0.08; // Impact multiplier based on mouse movement speed
+                    const totalStrength = baseStrength + mouseSpeed * speedInfluence;
+
                     // Acceleration away from mouse
-                    const pushX = (dx / (dist || 1)) * force * repelStrength;
-                    const pushY = (dy / (dist || 1)) * force * repelStrength;
+                    const pushX = (dx / (dist || 1)) * force * totalStrength;
+                    const pushY = (dy / (dist || 1)) * force * totalStrength;
 
                     // Apply physics forces (flows away like fluid)
                     this.vx += pushX;
@@ -516,6 +523,21 @@ function initInteractiveBackgroundPlexus() {
     function animate() {
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calculate mouse velocity per frame
+        if (mouse.active && mouse.lastX !== -1000) {
+            mouse.vx = mouse.x - mouse.lastX;
+            mouse.vy = mouse.y - mouse.lastY;
+        } else {
+            mouse.vx = 0;
+            mouse.vy = 0;
+            mouse.lastX = -1000;
+        }
+
+        if (mouse.active) {
+            mouse.lastX = mouse.x;
+            mouse.lastY = mouse.y;
+        }
 
         // A. Update and draw particles
         particles.forEach(p => {
