@@ -180,12 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // DYNAMIC PARTICLE PLEXUS (GOOGLE-STYLE BACKGROUND)
 // ========================================
 function initInteractiveBackgroundPlexus() {
-    // 1. Mobile & Touch Screen Detection
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    // 1. Mobile & Hover Capability Detection
     const isMobile = window.innerWidth <= 768;
+    const supportsHover = window.matchMedia("(hover: hover)").matches;
     
-    if (isTouchDevice || isMobile) {
-        return; // Silent exit on mobile/touch screens to protect performance & UX
+    if (isMobile || !supportsHover) {
+        return; // Silent exit on mobile/tablet screens that do not support hover/pointer interaction
     }
 
     // 2. DOM Setup
