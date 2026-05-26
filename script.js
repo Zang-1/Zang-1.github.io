@@ -203,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealOnScroll();
     initInteractiveBackgroundPlexus();
     cacheSectionDimensions();
+    init3DTiltEffect();
     
     // Lightbox next/prev click event listeners
     const prevBtn = document.getElementById('lightboxPrev');
@@ -740,6 +741,65 @@ function closeLightbox(event) {
     ) {
         lightbox.classList.remove('active');
     }
+}
+
+// ========================================
+// 3D PARALLAX TILT EFFECT FOR GALLERY FRAMES
+// ========================================
+function init3DTiltEffect() {
+    const frames = document.querySelectorAll('.gallery-frame');
+    
+    frames.forEach(frame => {
+        // Create glare element dynamically if it doesn't exist
+        let glare = frame.querySelector('.frame-glare');
+        if (!glare) {
+            glare = document.createElement('div');
+            glare.className = 'frame-glare';
+            frame.appendChild(glare);
+        }
+
+        frame.addEventListener('mousemove', (e) => {
+            // Cancel tilt calculation if this frame is currently expanded/active
+            if (frame.classList.contains('active-frame')) {
+                frame.style.transform = '';
+                glare.style.opacity = '0';
+                return;
+            }
+
+            const rect = frame.getBoundingClientRect();
+            const x = e.clientX - rect.left; // mouse X relative to card bounds
+            const y = e.clientY - rect.top;  // mouse Y relative to card bounds
+            
+            const width = rect.width;
+            const height = rect.height;
+            
+            // Calculate tilt angle based on hover positioning (max tilt 10 degrees)
+            const maxTilt = 10;
+            const tiltX = ((y / height) - 0.5) * -maxTilt * 2; // X-axis tilt (tilt up/down)
+            const tiltY = ((x / width) - 0.5) * maxTilt * 2;  // Y-axis tilt (tilt left/right)
+            
+            // Rotate card around perspective field and scale up slightly on hover
+            frame.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+            
+            // Move glare radial gradient spotlight directly with cursor coordinates
+            const glareX = (x / width) * 100;
+            const glareY = (y / height) * 100;
+            glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.16) 0%, transparent 65%)`;
+            glare.style.opacity = '1';
+        });
+
+        frame.addEventListener('mouseleave', () => {
+            // Smoothly ease card back to flat baseline orientation on hover exit
+            frame.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            frame.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            glare.style.opacity = '0';
+        });
+
+        frame.addEventListener('mouseenter', () => {
+            // Remove transitions temporarily on hover entry to prevent layout rendering stutter
+            frame.style.transition = 'none';
+        });
+    });
 }
 
 
