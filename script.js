@@ -280,12 +280,12 @@ function initInteractiveBackgroundPlexus() {
 
     // 5. Particle Plexus Engine
     let particles = [];
-    const maxParticles = 80;
+    const maxParticles = 125;
     const magneticRadius = 220;
     const magneticStrength = 0.45;
     const orbitalStrength = 0.35;
     const friction = 0.94;
-    const connectionDistance = 110;
+    const connectionDistance = 95;
 
     // Fetch theme colors dynamically
     function getThemeColors() {
