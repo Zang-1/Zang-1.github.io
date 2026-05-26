@@ -1320,7 +1320,7 @@ img {
 }
 
 /* ========================================
-   INTERACTIVE BACKGROUND CANVAS & CURSOR
+   INTERACTIVE BACKGROUND CANVAS (GOOGLE-STYLE)
    ======================================== */
 
 #interactive-bg-canvas {
@@ -1335,81 +1335,10 @@ img {
     transition: opacity var(--transition-slow);
 }
 
-/* Custom Cursor Elements */
-.custom-cursor-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--accent-cyan);
-    border-radius: 50%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 9999;
-    transition: width 0.15s ease-out, height 0.15s ease-out, background-color 0.2s ease-out;
-}
-
-.custom-cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--accent-purple);
-    border-radius: 50%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 9998;
-    /* Height and width transition smoothly on hover, while positioning uses JS lerp */
-    transition: width 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
-                height 0.25s cubic-bezier(0.25, 1, 0.5, 1), 
-                border-color 0.25s ease-out, 
-                background-color 0.25s ease-out;
-}
-
-/* Hover States (when mouse is over interactive elements) */
-.custom-cursor-dot.hovered {
-    width: 4px;
-    height: 4px;
-    background-color: #fff;
-}
-
-.custom-cursor-outline.hovered {
-    width: 56px;
-    height: 56px;
-    border-color: var(--accent-pink);
-    background-color: rgba(244, 114, 182, 0.08);
-    mix-blend-mode: difference;
-}
-
-/* Active Click State */
-.custom-cursor-outline.active {
-    width: 32px;
-    height: 32px;
-    border-color: var(--accent-cyan);
-    background-color: rgba(0, 212, 255, 0.1);
-}
-
-/* Immersive Cursor-hide for Fine-pointing Desktop Devices */
-@media (hover: hover) and (pointer: fine) {
-    .custom-cursor-active, 
-    .custom-cursor-active * {
-        cursor: none !important;
-    }
-}
-
 /* Graceful degradation for touch devices and small screens */
 @media (max-width: 768px), (hover: none) {
-    .custom-cursor-dot,
-    .custom-cursor-outline,
     #interactive-bg-canvas {
         display: none !important;
-    }
-    
-    .custom-cursor-active, 
-    .custom-cursor-active * {
-        cursor: auto !important;
     }
 }
 

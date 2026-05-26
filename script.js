@@ -170,19 +170,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ========================================
 // INITIALIZE
 // ========================================
-// ========================================
-// INITIALIZE
-// ========================================
 document.addEventListener('DOMContentLoaded', () => {
     typeText();
     revealOnScroll();
-    initCustomCursorAndPlexus();
+    initInteractiveBackgroundPlexus();
 });
 
 // ========================================
-// CUSTOM CURSOR & DYNAMIC PARTICLE PLEXUS (GOOGLE-STYLE)
+// DYNAMIC PARTICLE PLEXUS (GOOGLE-STYLE BACKGROUND)
 // ========================================
-function initCustomCursorAndPlexus() {
+function initInteractiveBackgroundPlexus() {
     // 1. Mobile & Touch Screen Detection
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const isMobile = window.innerWidth <= 768;
@@ -191,70 +188,34 @@ function initCustomCursorAndPlexus() {
         return; // Silent exit on mobile/touch screens to protect performance & UX
     }
 
-    // Add active class to HTML to hide system cursor via CSS
-    document.documentElement.classList.add('custom-cursor-active');
-
-    // 2. DOM Elements Setup
-    const dot = document.getElementById('customCursorDot');
-    const outline = document.getElementById('customCursorOutline');
+    // 2. DOM Setup
     const canvas = document.getElementById('interactive-bg-canvas');
-    if (!dot || !outline || !canvas) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     
     // 3. Mouse Coordinates Tracking
-    let mouse = { x: -1000, y: -1000, active: false, lastActiveTime: 0 };
-    let dotPos = { x: 0, y: 0 };
-    let outlinePos = { x: 0, y: 0 };
-    
-    // Lerp factor for outer cursor smooth delay
-    const lerpFactor = 0.16;
+    let mouse = { x: -1000, y: -1000, active: false };
 
-    // Listen to mouse coordinates
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
         mouse.active = true;
-        mouse.lastActiveTime = Date.now();
     });
 
     window.addEventListener('mouseenter', () => {
         mouse.active = true;
-        dot.style.opacity = '1';
-        outline.style.opacity = '1';
     });
 
     window.addEventListener('mouseleave', () => {
         mouse.active = false;
-        dot.style.opacity = '0';
-        outline.style.opacity = '0';
     });
 
-    // 4. Hover States and Click Events (Event Delegation)
-    document.body.addEventListener('mouseover', (e) => {
-        const target = e.target.closest('a, button, .social-link, .hero-cta, .glass-card, .nav-link, .theme-toggle, .contact-social-link');
-        if (target) {
-            dot.classList.add('hovered');
-            outline.classList.add('hovered');
-        }
-    });
-
-    document.body.addEventListener('mouseout', (e) => {
-        const target = e.target.closest('a, button, .social-link, .hero-cta, .glass-card, .nav-link, .theme-toggle, .contact-social-link');
-        if (target) {
-            dot.classList.remove('hovered');
-            outline.classList.remove('hovered');
-        }
-    });
-
+    // 4. Click Gravity-Inversion Shockwave
     window.addEventListener('mousedown', () => {
-        outline.classList.add('active');
-        // Trigger a gravity-inversion shockwave on click
-        triggerShockwave(mouse.x, mouse.y);
-    });
-
-    window.addEventListener('mouseup', () => {
-        outline.classList.remove('active');
+        if (mouse.active) {
+            triggerShockwave(mouse.x, mouse.y);
+        }
     });
 
     // 5. Particle Plexus Engine
@@ -269,7 +230,6 @@ function initCustomCursorAndPlexus() {
     // Fetch theme colors dynamically
     function getThemeColors() {
         const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
-        // Elegant alpha-ready rgb components matching portfolio CSS variables
         if (isLightTheme) {
             return [
                 '0, 180, 220',  // Cyan/Blue
@@ -324,8 +284,7 @@ function initCustomCursorAndPlexus() {
                     const pullX = (dx / dist) * force * magneticStrength;
                     const pullY = (dy / dist) * force * magneticStrength;
 
-                    // Tangent orbital force to create swirling effect
-                    // (perpendicular to pull direction)
+                    // Tangent orbital force to create swirling effect (perpendicular to pull)
                     const perpX = (-dy / dist) * force * orbitalStrength;
                     const perpY = (dx / dist) * force * orbitalStrength;
 
@@ -455,31 +414,11 @@ function initCustomCursorAndPlexus() {
                     ctx.moveTo(p1.x, p1.y);
                     ctx.lineTo(p2.x, p2.y);
                     
-                    // Blend colors of both nodes for an extremely premium glow transition
                     ctx.strokeStyle = `rgba(${p1.color}, ${lineAlpha})`;
                     ctx.stroke();
                 }
             }
         }
-
-        // C. Smooth dual cursor movement
-        if (mouse.active) {
-            // Instant dot position tracking
-            dotPos.x = mouse.x;
-            dotPos.y = mouse.y;
-
-            // Delayed lerp outer outline position tracking
-            outlinePos.x += (mouse.x - outlinePos.x) * lerpFactor;
-            outlinePos.y += (mouse.y - outlinePos.y) * lerpFactor;
-        } else {
-            // Float them slightly offscreen if inactive
-            dot.style.opacity = '0';
-            outline.style.opacity = '0';
-        }
-
-        // Apply hardware-accelerated transform translates
-        dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0)`;
-        outline.style.transform = `translate3d(${outlinePos.x}px, ${outlinePos.y}px, 0)`;
 
         requestAnimationFrame(animate);
     }
@@ -499,4 +438,5 @@ function initCustomCursorAndPlexus() {
         }
     });
 }
+
 
