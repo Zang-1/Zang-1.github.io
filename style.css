@@ -1367,10 +1367,10 @@ img {
     transition: opacity var(--transition-slow);
 }
 
-/* Graceful degradation for touch devices and small screens */
-@media (max-width: 768px), (hover: none) {
+/* Optimized display parameters for touch screens and mobile screens */
+@media (max-width: 768px) {
     #interactive-bg-canvas {
-        display: none !important;
+        opacity: 0.55; /* Softer opacity on mobile to protect readability */
     }
 }
 

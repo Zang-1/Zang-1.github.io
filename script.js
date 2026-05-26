@@ -240,52 +240,58 @@ document.addEventListener('DOMContentLoaded', () => {
 // DYNAMIC PARTICLE PLEXUS (GOOGLE-STYLE BACKGROUND)
 // ========================================
 function initInteractiveBackgroundPlexus() {
-    // 1. Mobile & Hover Capability Detection
-    const isMobile = window.innerWidth <= 768;
-    const supportsHover = window.matchMedia("(hover: hover)").matches;
-    
-    if (isMobile || !supportsHover) {
-        return; // Silent exit on mobile/tablet screens that do not support hover/pointer interaction
-    }
-
-    // 2. DOM Setup
+    // 1. DOM Setup
     const canvas = document.getElementById('interactive-bg-canvas');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     
-    // 3. Mouse Coordinates Tracking
+    // 2. Mouse/Touch Coordinates Tracking
     let mouse = { x: -1000, y: -1000, active: false };
+    const supportsHover = window.matchMedia("(hover: hover)").matches;
 
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-        mouse.active = true;
-    });
+    if (supportsHover) {
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            mouse.active = true;
+        });
 
-    window.addEventListener('mouseenter', () => {
-        mouse.active = true;
-    });
+        window.addEventListener('mouseenter', () => {
+            mouse.active = true;
+        });
 
-    window.addEventListener('mouseleave', () => {
-        mouse.active = false;
-    });
+        window.addEventListener('mouseleave', () => {
+            mouse.active = false;
+        });
 
-    // 4. Click Gravity-Inversion Shockwave
-    window.addEventListener('mousedown', () => {
-        if (mouse.active) {
-            triggerShockwave(mouse.x, mouse.y);
-        }
-    });
+        // Click Gravity-Inversion Shockwave
+        window.addEventListener('mousedown', () => {
+            if (mouse.active) {
+                triggerShockwave(mouse.x, mouse.y);
+            }
+        });
+    } else {
+        // Mobile tap/touchstart micro-interaction shockwave
+        window.addEventListener('touchstart', (e) => {
+            if (e.touches && e.touches[0]) {
+                const touchX = e.touches[0].clientX;
+                const touchY = e.touches[0].clientY;
+                triggerShockwave(touchX, touchY);
+            }
+        }, { passive: true });
+    }
 
-    // 5. Particle Plexus Engine
+    // 3. Responsive/Adaptive Particle Plexus Parameters
     let particles = [];
-    const maxParticles = 160;
+    let isMobileDevice = window.innerWidth <= 768;
+    let maxParticles = isMobileDevice ? 40 : 160;
+    let connectionDistance = isMobileDevice ? 65 : 90;
+    
     const magneticRadius = 220;
     const magneticStrength = 0.45;
     const orbitalStrength = 0.35;
     const friction = 0.94;
-    const connectionDistance = 90;
 
     // Fetch theme colors dynamically
     function getThemeColors() {
@@ -406,6 +412,12 @@ function initInteractiveBackgroundPlexus() {
     function initParticles() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        
+        // Dynamically update parameters on layout changes/resize
+        isMobileDevice = window.innerWidth <= 768;
+        maxParticles = isMobileDevice ? 40 : 160;
+        connectionDistance = isMobileDevice ? 65 : 90;
+        
         particles = [];
         for (let i = 0; i < maxParticles; i++) {
             particles.push(new Particle());
