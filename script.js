@@ -175,18 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
     revealOnScroll();
     initInteractiveBackgroundPlexus();
     
-    // Scroll indicator click handler
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-    if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', () => {
-            const musicSection = document.getElementById('music');
-            if (musicSection) {
-                musicSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-        scrollIndicator.style.cursor = 'pointer';
-    }
-    
     // Lightbox next/prev click event listeners
     const prevBtn = document.getElementById('lightboxPrev');
     const nextBtn = document.getElementById('lightboxNext');
@@ -213,12 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 navigateLightbox(1);
             } else if (e.key === 'Escape') {
                 lightbox.classList.remove('active');
-                
-                // Restore snap scroll if album grid is closed
-                const photoGrid = document.getElementById('photoGridContainer');
-                if (!photoGrid || photoGrid.style.display === 'none') {
-                    document.documentElement.classList.remove('no-snap');
-                }
             }
         }
     });
@@ -532,9 +514,6 @@ function handleImageError(imgEl, placeholderTitle) {
 
 // 2. Expand clicked gallery frame and hide the other two frames smoothly
 function expandGalleryFrame(frameId) {
-    // Disable Snap Scroll so the user can freely scroll the photo list
-    document.documentElement.classList.add('no-snap');
-
     const frames = {
         'billiards': document.getElementById('frame-billiards'),
         'motorcycles': document.getElementById('frame-motorcycles'),
@@ -597,9 +576,6 @@ function expandGalleryFrame(frameId) {
 
 // 3. Close the expanded category grid and restore all three frames
 function closeExpandedFrame() {
-    // Restore Snap Scroll
-    document.documentElement.classList.remove('no-snap');
-
     const frames = [
         document.getElementById('frame-billiards'),
         document.getElementById('frame-motorcycles'),
@@ -647,9 +623,6 @@ function openLightbox(itemEl, imgSrc, captionText) {
     
     if (!lightbox || !lightboxImg || !caption) return;
     
-    // Disable Snap Scroll when viewing photos in Lightbox
-    document.documentElement.classList.add('no-snap');
-
     // Find all valid images in the current active grid
     const activeGrid = itemEl.closest('.photo-grid');
     if (activeGrid) {
@@ -737,12 +710,6 @@ function closeLightbox(event) {
         event.target.closest('.lightbox-close')
     ) {
         lightbox.classList.remove('active');
-        
-        // Restore Snap Scroll if album grid is closed
-        const photoGrid = document.getElementById('photoGridContainer');
-        if (!photoGrid || photoGrid.style.display === 'none') {
-            document.documentElement.classList.remove('no-snap');
-        }
     }
 }
 

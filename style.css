@@ -72,10 +72,6 @@ html {
     scroll-padding-top: 80px;
 }
 
-html:not(.no-snap) {
-    scroll-snap-type: y mandatory;
-}
-
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: var(--bg-primary);
@@ -259,10 +255,7 @@ img {
    HERO SECTION
    ======================================== */
 .hero {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     min-height: 100vh;
-    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -625,21 +618,11 @@ img {
    SECTIONS COMMON
    ======================================== */
 .section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 0;
+    padding: var(--section-padding);
     position: relative;
-    box-sizing: border-box;
 }
 
 .section-container {
-    width: 100%;
     max-width: var(--container-width);
     margin: 0 auto;
     padding: 0 24px;
@@ -1892,87 +1875,6 @@ img {
     
     .photo-grid-container {
         padding: 20px 16px;
-    }
-}
-
-/* ========================================
-   MOBILE SNAP SCROLL OPTIMIZATIONS (<= 768px)
-   ======================================== */
-@media (max-width: 768px) {
-    .section {
-        padding: 40px 16px 20px;
-    }
-    
-    /* About cards mobile compactness */
-    .about-grid {
-        gap: 12px;
-    }
-    
-    .about-card {
-        padding: 16px 14px;
-    }
-    
-    .about-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
-        margin-bottom: 8px;
-    }
-    
-    .about-card h3 {
-        font-size: 1.05rem;
-        margin-bottom: 6px;
-    }
-    
-    .about-card p {
-        font-size: 0.82rem;
-        line-height: 1.5;
-    }
-    
-    /* Contact and Footer mobile compactness */
-    .contact-info {
-        padding: 24px 20px;
-    }
-    
-    .contact-info h3 {
-        font-size: 1.25rem;
-        margin-bottom: 8px;
-    }
-    
-    .contact-info > p {
-        font-size: 0.85rem;
-        margin-bottom: 20px;
-    }
-    
-    .contact-details {
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .contact-item {
-        padding: 10px 14px;
-        gap: 12px;
-    }
-    
-    .contact-item-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 0.9rem;
-    }
-    
-    .contact-value {
-        font-size: 0.85rem;
-    }
-    
-    .contact-social-link {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-    
-    .footer {
-        padding: 16px 16px 0;
-        margin-top: 15px;
     }
 }
 
