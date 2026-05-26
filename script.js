@@ -285,8 +285,8 @@ function initInteractiveBackgroundPlexus() {
     // 3. Responsive/Adaptive Particle Plexus Parameters
     let particles = [];
     let isMobileDevice = window.innerWidth <= 768;
-    let maxParticles = isMobileDevice ? 40 : 160;
-    let connectionDistance = isMobileDevice ? 65 : 90;
+    let maxParticles = isMobileDevice ? 60 : 220;
+    let connectionDistance = isMobileDevice ? 55 : 80;
     
     const magneticRadius = 220;
     const magneticStrength = 0.45;
@@ -476,8 +476,8 @@ function initInteractiveBackgroundPlexus() {
         
         // Dynamically update parameters on layout changes/resize
         isMobileDevice = window.innerWidth <= 768;
-        maxParticles = isMobileDevice ? 40 : 160;
-        connectionDistance = isMobileDevice ? 65 : 90;
+        maxParticles = isMobileDevice ? 60 : 220;
+        connectionDistance = isMobileDevice ? 55 : 80;
         
         particles = [];
         for (let i = 0; i < maxParticles; i++) {
@@ -541,7 +541,7 @@ function initInteractiveBackgroundPlexus() {
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < connectionDistance) {
-                    const lineAlpha = (1.0 - (dist / connectionDistance)) * 0.16;
+                    const lineAlpha = (1.0 - (dist / connectionDistance)) * 0.12;
                     
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
