@@ -332,17 +332,78 @@ function initInteractiveBackgroundPlexus() {
             this.baseVy = this.vy;
             this.radius = Math.random() * 2 + 1.2; // 1.2px to 3.2px
             this.color = activeColors[Math.floor(Math.random() * activeColors.length)];
-            this.alpha = Math.random() * 0.4 + 0.3; // 0.3 to 0.7 base opacity
+            this.targetAlpha = Math.random() * 0.4 + 0.3; // 0.3 to 0.7 base opacity
+            this.alpha = this.targetAlpha;
+            this.maxLife = Math.random() * 400 + 400; // ~6.6s to 13.3s at 60fps
+            this.life = Math.random() * this.maxLife; // Stagger initial lifetime to prevent bulk blinks
+        }
+
+        reset(atEdge = true) {
+            if (atEdge) {
+                // Respawn at a random edge of the screen
+                const edge = Math.floor(Math.random() * 4); // 0: Top, 1: Right, 2: Bottom, 3: Left
+                const offset = 10;
+                if (edge === 0) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = -offset;
+                } else if (edge === 1) {
+                    this.x = canvas.width + offset;
+                    this.y = Math.random() * canvas.height;
+                } else if (edge === 2) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height + offset;
+                } else {
+                    this.x = -offset;
+                    this.y = Math.random() * canvas.height;
+                }
+            } else {
+                // Respawn at a completely random position inside the canvas
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+            }
+
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = (Math.random() - 0.5) * 0.8;
+            this.baseVx = this.vx;
+            this.baseVy = this.vy;
+            this.radius = Math.random() * 2 + 1.2;
+            this.color = activeColors[Math.floor(Math.random() * activeColors.length)];
+            this.alpha = 0; // Start fully transparent
+            this.targetAlpha = Math.random() * 0.4 + 0.3;
+            this.maxLife = Math.random() * 400 + 400;
+            this.life = this.maxLife;
         }
 
         update() {
-            // Apply magnetic attraction to mouse cursor if mouse is nearby
-            if (mouse.active) {
+            // Decrease life remaining
+            this.life--;
+
+            // Handle fading out when near death, or fading in when newly spawned
+            if (this.life <= 0) {
+                this.reset(false); // Respawn somewhere on the screen when dead of old age
+            } else if (this.life < 50) {
+                // Fade out before death
+                this.alpha -= 0.015;
+                if (this.alpha < 0) this.alpha = 0;
+            } else if (this.alpha < this.targetAlpha) {
+                // Fade in
+                this.alpha += 0.015;
+                if (this.alpha > this.targetAlpha) this.alpha = this.targetAlpha;
+            }
+
+            // Apply magnetic attraction to mouse cursor if mouse is nearby and particle is healthy
+            if (mouse.active && this.life > 50) {
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < magneticRadius) {
+                if (dist < 20) {
+                    // Too close to mouse, initiate absorption and fade out
+                    this.alpha -= 0.05;
+                    if (this.alpha <= 0) {
+                        this.reset(true); // Respawn at the edge
+                    }
+                } else if (dist < magneticRadius) {
                     // Attraction force decreases with distance
                     const force = (magneticRadius - dist) / magneticRadius;
                     
