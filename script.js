@@ -439,4 +439,174 @@ function initInteractiveBackgroundPlexus() {
     });
 }
 
+// ========================================
+// INTERACTIVE GALLERY LOGIC
+// ========================================
+
+// 1. Handle missing images by dynamically showing a premium glass placeholder
+function handleImageError(imgEl, placeholderTitle) {
+    imgEl.style.display = 'none'; // Hide the broken image element
+    
+    // Hide the search search-plus hover overlay for empty slots
+    const parent = imgEl.parentElement;
+    const overlay = parent.querySelector('.item-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+    }
+    
+    // Prevent double generation of placeholder cards
+    if (parent.querySelector('.gallery-placeholder-card')) return;
+    
+    // Determine icon based on category type in source path
+    let iconClass = 'fa-image';
+    if (imgEl.src.includes('billiards')) {
+        iconClass = 'fa-8-ball';
+    } else if (imgEl.src.includes('motorcycles')) {
+        iconClass = 'fa-motorcycle';
+    } else if (imgEl.src.includes('life')) {
+        iconClass = 'fa-camera';
+    }
+    
+    // Generate placeholder card
+    const card = document.createElement('div');
+    card.className = 'gallery-placeholder-card';
+    card.innerHTML = `
+        <i class="fas ${iconClass}"></i>
+        <span>${placeholderTitle}</span>
+        <p>Ảnh chưa tải lên</p>
+    `;
+    
+    parent.appendChild(card);
+    
+    // Disable clicking lightbox for empty placeholders
+    parent.style.cursor = 'default';
+}
+
+// 2. Expand clicked gallery frame and hide the other two frames smoothly
+function expandGalleryFrame(frameId) {
+    const frames = {
+        'billiards': document.getElementById('frame-billiards'),
+        'motorcycles': document.getElementById('frame-motorcycles'),
+        'life': document.getElementById('frame-life')
+    };
+    
+    const grids = {
+        'billiards': document.getElementById('grid-billiards'),
+        'motorcycles': document.getElementById('grid-motorcycles'),
+        'life': document.getElementById('grid-life')
+    };
+    
+    const container = document.getElementById('photoGridContainer');
+    const titleEl = document.getElementById('gridTitle');
+    
+    if (!container || !titleEl) return;
+    
+    // Set titles based on category
+    const titles = {
+        'billiards': 'Album Bản Thân (Myself) 👤',
+        'motorcycles': 'Album Xe Máy (Motorcycles) 🏍️',
+        'life': 'Album Đời Thường (Daily) 📸'
+    };
+    
+    titleEl.textContent = titles[frameId] || 'Album';
+    
+    // Transition frames: active scales up, others fade & collapse
+    Object.keys(frames).forEach(key => {
+        const frame = frames[key];
+        if (frame) {
+            if (key === frameId) {
+                frame.classList.remove('collapsed-frame');
+                frame.classList.add('active-frame');
+            } else {
+                frame.classList.remove('active-frame');
+                frame.classList.add('collapsed-frame');
+            }
+        }
+    });
+    
+    // Hide all grids first, then show the requested one
+    Object.keys(grids).forEach(key => {
+        const grid = grids[key];
+        if (grid) {
+            grid.style.display = key === frameId ? 'grid' : 'none';
+        }
+    });
+    
+    // Show container
+    container.style.display = 'block';
+    
+    // Smoothly scroll to the active frame header
+    setTimeout(() => {
+        const activeFrame = frames[frameId];
+        if (activeFrame) {
+            activeFrame.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 400);
+}
+
+// 3. Close the expanded category grid and restore all three frames
+function closeExpandedFrame() {
+    const frames = [
+        document.getElementById('frame-billiards'),
+        document.getElementById('frame-motorcycles'),
+        document.getElementById('frame-life')
+    ];
+    
+    const container = document.getElementById('photoGridContainer');
+    
+    // Restore all frames visibility
+    frames.forEach(frame => {
+        if (frame) {
+            frame.classList.remove('active-frame', 'collapsed-frame');
+        }
+    });
+    
+    // Hide container
+    if (container) {
+        container.style.display = 'none';
+    }
+    
+    // Smoothly scroll back to the gallery section header
+    setTimeout(() => {
+        const gallerySection = document.getElementById('gallery');
+        if (gallerySection) {
+            gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 100);
+}
+
+// 4. Open image in lightbox (for valid images only)
+function openLightbox(itemEl, imgSrc, captionText) {
+    const img = itemEl.querySelector('img');
+    // If the image is hidden (placeholder is active), do not open the lightbox
+    if (img && img.style.display === 'none') {
+        return;
+    }
+    
+    const lightbox = document.getElementById('photoLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const caption = document.getElementById('lightboxCaption');
+    
+    if (!lightbox || !lightboxImg || !caption) return;
+    
+    lightboxImg.src = imgSrc;
+    caption.textContent = captionText;
+    lightbox.classList.add('active');
+}
+
+// 5. Close full-screen lightbox
+function closeLightbox(event) {
+    const lightbox = document.getElementById('photoLightbox');
+    if (!lightbox) return;
+    
+    // Close if clicked close button, outside elements, or overlay background
+    if (
+        event.target.id === 'photoLightbox' || 
+        event.target.classList.contains('lightbox-close') || 
+        event.target.closest('.lightbox-close')
+    ) {
+        lightbox.classList.remove('active');
+    }
+}
+
 

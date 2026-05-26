@@ -37,6 +37,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#music" class="nav-link">Music</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <!-- <li><a href="#hobbies" class="nav-link">Hobbies</a></li> -->
                 <!-- <li><a href="#timeline" class="nav-link">Timeline</a></li> -->
                 <!-- <li><a href="#goals" class="nav-link">Goals</a></li> -->
@@ -382,6 +383,193 @@
         </div>
     </section>
     -->
+
+    <!-- ===== GALLERY SECTION ===== -->
+    <section class="section gallery-section" id="gallery">
+        <div class="section-container">
+            <div class="section-header" data-reveal>
+                <span class="section-tag">// my visual library</span>
+                <h2 class="section-title">My <span class="gradient-text">Gallery</span></h2>
+            </div>
+
+            <div class="gallery-wrapper" data-reveal>
+                <!-- Frame 1: Billiards / Myself -->
+                <div class="gallery-frame glass-card" id="frame-billiards" onclick="expandGalleryFrame('billiards')">
+                    <div class="frame-cover-image">
+                        <img src="Ảnh/Ảnh khung ngoài/yeah2.png" alt="Myself Cover">
+                    </div>
+                    <div class="frame-overlay-dark"></div>
+                    <div class="frame-content">
+                        <div class="frame-icon"><i class="fas fa-user-circle"></i></div>
+                        <h3>Myself</h3>
+                        <p>Driven by intense focus and absolute precision</p>
+                        <span class="frame-action">Xem album <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Frame 2: Motorcycles -->
+                <div class="gallery-frame glass-card" id="frame-motorcycles"
+                    onclick="expandGalleryFrame('motorcycles')">
+                    <div class="frame-cover-image">
+                        <img src="Ảnh/Ảnh khung ngoài/IMG_4800.jpg"
+                            alt="Motorcycles Cover">
+                    </div>
+                    <div class="frame-overlay-dark"></div>
+                    <div class="frame-content">
+                        <div class="frame-icon"><i class="fas fa-motorcycle"></i></div>
+                        <h3>Motorcycles</h3>
+                        <p>Finding my freedom in the rhythm of the city streets</p>
+                        <span class="frame-action">Xem album <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Frame 3: Life & Vlog / Daily -->
+                <div class="gallery-frame glass-card" id="frame-life" onclick="expandGalleryFrame('life')">
+                    <div class="frame-cover-image">
+                        <img src="Ảnh/Ảnh trong/ảnh daily/z7867581724712_7ad3960bcd308860b36161d9aa5d5942.jpg"
+                            alt="Daily Cover">
+                    </div>
+                    <div class="frame-overlay-dark"></div>
+                    <div class="frame-content">
+                        <div class="frame-icon"><i class="fas fa-camera"></i></div>
+                        <h3>Daily</h3>
+                        <p>Just an IT student capturing ordinary moments</p>
+                        <span class="frame-action">Xem album <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Photo Grid Container (Loads below when a frame is expanded) -->
+            <div class="photo-grid-container glass-card" id="photoGridContainer" style="display: none;">
+                <div class="grid-header">
+                    <h3 id="gridTitle">Album</h3>
+                    <button class="close-grid-btn" id="closeGridBtn" onclick="closeExpandedFrame()"
+                        aria-label="Close Album">
+                        <i class="fas fa-times"></i> Đóng
+                    </button>
+                </div>
+
+                <!-- Billiards Photos -->
+                <div class="photo-grid" id="grid-billiards" style="display: none;">
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh mình/z7867573107848_dcf3f29c4abe184f09f029ab12a3efd0.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh mình/z7867573107848_dcf3f29c4abe184f09f029ab12a3efd0.jpg" alt="Myself Slot 1"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh mình/z7867573444580_04097ab2a1c4508835f7a1bf8ea76477.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh mình/z7867573444580_04097ab2a1c4508835f7a1bf8ea76477.jpg" alt="Myself Slot 2"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh mình/z7867573602287_ff167f5e8c4794c99c10e7d627d78b5c.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh mình/z7867573602287_ff167f5e8c4794c99c10e7d627d78b5c.jpg" alt="Myself Slot 3"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh mình/z7867573719012_62a3322652b05f7a345d59b34a09568c.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh mình/z7867573719012_62a3322652b05f7a345d59b34a09568c.jpg" alt="Myself Slot 4"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh mình/z7867573806282_655adbbe6d1530f637fd2ca4f8667a3d.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh mình/z7867573806282_655adbbe6d1530f637fd2ca4f8667a3d.jpg" alt="Myself Slot 5"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <!-- Motorcycles Photos -->
+                <div class="photo-grid" id="grid-motorcycles" style="display: none;">
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh xe/z7867552172506_9c6e384f5cd648544b06229bf0e5b4db.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh xe/z7867552172506_9c6e384f5cd648544b06229bf0e5b4db.jpg" alt="Motorcycles Slot 1"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh xe/z7867552244991_ecc590532456411c3c9cf17ea10d964c.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh xe/z7867552244991_ecc590532456411c3c9cf17ea10d964c.jpg" alt="Motorcycles Slot 2"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh xe/z7867552327524_782dd64e3b53bc6c7897175d8f0ee8ec.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh xe/z7867552327524_782dd64e3b53bc6c7897175d8f0ee8ec.jpg" alt="Motorcycles Slot 3"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh xe/z7867552394139_4e9d186880fdba759b9682afef93d48d.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh xe/z7867552394139_4e9d186880fdba759b9682afef93d48d.jpg" alt="Motorcycles Slot 4"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh xe/A65093D4-FECD-4512-BFAF-66B3026AA4CD.png', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh xe/A65093D4-FECD-4512-BFAF-66B3026AA4CD.png" alt="Motorcycles Slot 5"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <!-- Life & Vlog Photos -->
+                <div class="photo-grid" id="grid-life" style="display: none;">
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh daily/z7867581308309_a22d233f605620e2084b12fa083e5064.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh daily/z7867581308309_a22d233f605620e2084b12fa083e5064.jpg" alt="Life Slot 1"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh daily/z7867581724712_7ad3960bcd308860b36161d9aa5d5942.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh daily/z7867581724712_7ad3960bcd308860b36161d9aa5d5942.jpg" alt="Life Slot 2"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh daily/z7867582189241_36e308db949ac7c4e1975ccee4eb719e.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh daily/z7867582189241_36e308db949ac7c4e1975ccee4eb719e.jpg" alt="Life Slot 3"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh daily/z7867582548615_99a5a2c4e851e04fa3f0bc78a559af8b.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh daily/z7867582548615_99a5a2c4e851e04fa3f0bc78a559af8b.jpg" alt="Life Slot 4"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh daily/z7867582694625_021c108d80db9e0b8514aa86a7f926aa.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh daily/z7867582694625_021c108d80db9e0b8514aa86a7f926aa.jpg" alt="Life Slot 5"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                    <div class="gallery-item"
+                        onclick="openLightbox(this, 'Ảnh/Ảnh trong/ảnh daily/z7867582846706_1852ddeb6554ff6c38b5ee2584230db4.jpg', '')">
+                        <img src="Ảnh/Ảnh trong/ảnh daily/z7867582846706_1852ddeb6554ff6c38b5ee2584230db4.jpg" alt="Life Slot 6"
+                            onerror="handleImageError(this, '')">
+                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PHOTO LIGHTBOX OVERLAY ===== -->
+    <div class="lightbox" id="photoLightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close Lightbox">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="Lightbox Preview">
+            <p id="lightboxCaption" class="lightbox-caption">Mô tả ảnh</p>
+        </div>
+    </div>
 
     <!-- ===== CONTACT SECTION ===== -->
     <section class="section contact" id="contact">
