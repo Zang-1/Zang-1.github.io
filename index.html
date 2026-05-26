@@ -411,7 +411,7 @@
                 <div class="gallery-frame glass-card" id="frame-motorcycles"
                     onclick="expandGalleryFrame('motorcycles')">
                     <div class="frame-cover-image">
-                        <img src="Ảnh/Ảnh khung ngoài/IMG_4800.jpg"
+                        <img src="Ảnh/Ảnh khung ngoài/IMG_4800.JPG"
                             alt="Motorcycles Cover">
                     </div>
                     <div class="frame-overlay-dark"></div>
@@ -564,6 +564,12 @@
     <div class="lightbox" id="photoLightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close Lightbox">
             <i class="fas fa-times"></i>
+        </button>
+        <button class="lightbox-btn prev-btn" id="lightboxPrev" aria-label="Previous Image">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-btn next-btn" id="lightboxNext" aria-label="Next Image">
+            <i class="fas fa-chevron-right"></i>
         </button>
         <div class="lightbox-content">
             <img id="lightboxImg" src="" alt="Lightbox Preview">

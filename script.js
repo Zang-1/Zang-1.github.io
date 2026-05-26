@@ -174,6 +174,36 @@ document.addEventListener('DOMContentLoaded', () => {
     typeText();
     revealOnScroll();
     initInteractiveBackgroundPlexus();
+    
+    // Lightbox next/prev click event listeners
+    const prevBtn = document.getElementById('lightboxPrev');
+    const nextBtn = document.getElementById('lightboxNext');
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox(-1);
+        });
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox(1);
+        });
+    }
+    
+    // Lightbox keyboard navigation support
+    window.addEventListener('keydown', (e) => {
+        const lightbox = document.getElementById('photoLightbox');
+        if (lightbox && lightbox.classList.contains('active')) {
+            if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            } else if (e.key === 'Escape') {
+                lightbox.classList.remove('active');
+            }
+        }
+    });
 });
 
 // ========================================
@@ -575,6 +605,10 @@ function closeExpandedFrame() {
     }, 100);
 }
 
+// Global variables for lightbox slide navigation
+let activeAlbumImages = [];
+let currentImageIndex = -1;
+
 // 4. Open image in lightbox (for valid images only)
 function openLightbox(itemEl, imgSrc, captionText) {
     const img = itemEl.querySelector('img');
@@ -589,12 +623,82 @@ function openLightbox(itemEl, imgSrc, captionText) {
     
     if (!lightbox || !lightboxImg || !caption) return;
     
+    // Find all valid images in the current active grid
+    const activeGrid = itemEl.closest('.photo-grid');
+    if (activeGrid) {
+        const allItems = Array.from(activeGrid.querySelectorAll('.gallery-item'));
+        // Filter out placeholders
+        activeAlbumImages = allItems.filter(item => {
+            const itemImg = item.querySelector('img');
+            return itemImg && itemImg.style.display !== 'none';
+        });
+        currentImageIndex = activeAlbumImages.indexOf(itemEl);
+    } else {
+        activeAlbumImages = [itemEl];
+        currentImageIndex = 0;
+    }
+    
     lightboxImg.src = imgSrc;
-    caption.textContent = captionText;
+    
+    if (captionText) {
+        caption.textContent = captionText;
+        caption.style.display = 'block';
+    } else {
+        caption.style.display = 'none';
+    }
+    
     lightbox.classList.add('active');
+    updateLightboxNavArrows();
 }
 
-// 5. Close full-screen lightbox
+// 5. Update visibility of lightbox navigation arrows
+function updateLightboxNavArrows() {
+    const prevBtn = document.getElementById('lightboxPrev');
+    const nextBtn = document.getElementById('lightboxNext');
+    if (!prevBtn || !nextBtn) return;
+    
+    if (activeAlbumImages.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+    } else {
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+    }
+}
+
+// 6. Navigate lightbox images
+function navigateLightbox(direction) {
+    if (activeAlbumImages.length <= 1) return;
+    
+    currentImageIndex += direction;
+    if (currentImageIndex < 0) {
+        currentImageIndex = activeAlbumImages.length - 1;
+    } else if (currentImageIndex >= activeAlbumImages.length) {
+        currentImageIndex = 0;
+    }
+    
+    const nextItem = activeAlbumImages[currentImageIndex];
+    if (nextItem) {
+        const nextImg = nextItem.querySelector('img');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const caption = document.getElementById('lightboxCaption');
+        
+        if (nextImg && lightboxImg) {
+            lightboxImg.style.opacity = 0;
+            setTimeout(() => {
+                lightboxImg.src = nextImg.src;
+                lightboxImg.style.opacity = 1;
+                
+                // Keep caption hidden since caption is empty in inner grids
+                if (caption) {
+                    caption.style.display = 'none';
+                }
+            }, 150);
+        }
+    }
+}
+
+// 7. Close full-screen lightbox
 function closeLightbox(event) {
     const lightbox = document.getElementById('photoLightbox');
     if (!lightbox) return;
