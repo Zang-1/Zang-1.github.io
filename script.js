@@ -45,15 +45,38 @@ const navLinks = document.getElementById('navLinks');
 const navHamburger = document.getElementById('navHamburger');
 const allNavLinks = document.querySelectorAll('.nav-link');
 
-// Scroll effect
+let cachedSections = [];
+
+// Cache section offsets to prevent layout thrashing (Forced Synchronous Layout) on scroll
+function cacheSectionDimensions() {
+    const sections = document.querySelectorAll('.section, .hero');
+    cachedSections = Array.from(sections).map(section => ({
+        id: section.getAttribute('id'),
+        top: section.offsetTop,
+        height: section.offsetHeight
+    }));
+}
+
+// Recalculate dimensions when page fully loads and when viewport changes size
+window.addEventListener('load', cacheSectionDimensions);
+window.addEventListener('resize', cacheSectionDimensions);
+
+// Scroll effect with passive listener for maximum frame rate
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
+    const scrollY = window.scrollY;
+    
+    // Add/remove class only when crossing the 50px boundary
+    if (scrollY > 50) {
+        if (!navbar.classList.contains('scrolled')) {
+            navbar.classList.add('scrolled');
+        }
     } else {
-        navbar.classList.remove('scrolled');
+        if (navbar.classList.contains('scrolled')) {
+            navbar.classList.remove('scrolled');
+        }
     }
     updateActiveNav();
-});
+}, { passive: true });
 
 // Hamburger toggle
 navHamburger.addEventListener('click', () => {
@@ -69,25 +92,30 @@ allNavLinks.forEach(link => {
     });
 });
 
-// Active nav link on scroll
+// Active nav link on scroll (0 layout reflows!)
 function updateActiveNav() {
-    const sections = document.querySelectorAll('.section, .hero');
+    if (cachedSections.length === 0) {
+        cacheSectionDimensions();
+    }
+    
     const scrollPos = window.scrollY + 150;
 
-    sections.forEach(section => {
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-        const id = section.getAttribute('id');
+    for (let i = 0; i < cachedSections.length; i++) {
+        const { id, top, height } = cachedSections[i];
 
         if (scrollPos >= top && scrollPos < top + height) {
             allNavLinks.forEach(link => {
-                link.classList.remove('active');
                 if (link.getAttribute('href') === `#${id}`) {
-                    link.classList.add('active');
+                    if (!link.classList.contains('active')) {
+                        // Clear active status of other links first
+                        allNavLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
                 }
             });
+            break; // Active section found, exit early!
         }
-    });
+    }
 }
 
 // ========================================
@@ -174,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     typeText();
     revealOnScroll();
     initInteractiveBackgroundPlexus();
+    cacheSectionDimensions();
     
     // Lightbox next/prev click event listeners
     const prevBtn = document.getElementById('lightboxPrev');
