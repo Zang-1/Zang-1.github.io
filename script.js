@@ -897,7 +897,7 @@ function init3DTiltEffect() {
 // SPOTIFY IFRAME API INTEGRATION
 // ========================================
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
-    const placeholders = document.querySelectorAll('.spotify-embed');
+    const placeholders = document.querySelectorAll('.spotify-player-container');
     if (placeholders.length === 0) return;
 
     const equalizer = document.querySelector('.equalizer');
@@ -936,7 +936,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
 };
 
 function initSpotifyIframeAPI() {
-    const placeholders = document.querySelectorAll('.spotify-embed');
+    const placeholders = document.querySelectorAll('.spotify-player-container');
     if (placeholders.length === 0) return;
 
     // Load Spotify IFrame API script dynamically
