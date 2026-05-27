@@ -254,6 +254,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ========================================
+// REAL-TIME CLOCK WIDGET
+// ========================================
+function initLiveClock() {
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const timeString = `${hours}:${minutes}`;
+        
+        const clockEl = document.getElementById('hero-clock');
+        if (clockEl) {
+            clockEl.textContent = timeString;
+        }
+    }
+    
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+// ========================================
 // INITIALIZE
 // ========================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -261,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealOnScroll();
     initInteractiveBackgroundPlexus();
     init3DTiltEffect();
+    initLiveClock();
     
     // Lightbox next/prev click event listeners
     const prevBtn = document.getElementById('lightboxPrev');

@@ -385,6 +385,14 @@ img {
 .hero-content {
     flex: 1;
 }
+.hero-badges-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out;
+}
 
 .hero-badge {
     display: inline-flex;
@@ -392,12 +400,40 @@ img {
     gap: 8px;
     padding: 8px 18px;
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(16, 185, 129, 0.25);
     border-radius: 100px;
     font-size: 0.82rem;
     color: var(--text-secondary);
-    margin-bottom: 28px;
-    animation: fadeInUp 0.8s ease-out;
+    transition: all var(--transition-fast);
+}
+
+.hero-badge:hover {
+    border-color: var(--accent-green) !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+    transform: translateY(-2px);
+    background: var(--bg-card-hover);
+}
+
+.clock-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-color: rgba(0, 212, 255, 0.25) !important;
+}
+
+.clock-badge:hover {
+    border-color: var(--accent-cyan) !important;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.15) !important;
+}
+
+.pulse-cyan {
+    background: var(--accent-cyan) !important;
+    animation: pulse-cyan-shadow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-cyan-shadow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(0, 212, 255, 0); }
 }
 
 .badge-dot {
