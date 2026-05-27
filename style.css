@@ -174,10 +174,37 @@ img {
 }
 
 .nav-links {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
     list-style: none;
+}
+
+/* Active Sliding Indicator Pill (Desktop) */
+.nav-active-pill {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    height: 38px;
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: 
+        left 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+        width 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.25s ease;
+    will-change: left, width, opacity;
+}
+
+[data-theme="light"] .nav-active-pill {
+    background: rgba(124, 58, 237, 0.06);
+    border-color: rgba(124, 58, 237, 0.15);
 }
 
 .nav-link {
@@ -186,26 +213,14 @@ img {
     color: var(--text-secondary);
     padding: 8px 16px;
     border-radius: 8px;
-    transition: all var(--transition-fast);
+    transition: color var(--transition-fast);
     position: relative;
+    z-index: 1;
 }
 
 .nav-link:hover,
 .nav-link.active {
     color: var(--text-primary);
-    background: rgba(124, 58, 237, 0.1);
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 2px;
-    background: var(--gradient-primary);
-    border-radius: 2px;
 }
 
 .nav-actions {
@@ -1291,26 +1306,78 @@ img {
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%;
+        right: 0;
         width: 280px;
         height: 100vh;
-        background: var(--bg-primary);
+        background: rgba(12, 12, 29, 0.72);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         flex-direction: column;
-        padding: 100px 40px 40px;
+        padding: 100px 24px 40px;
         border-left: 1px solid var(--border-color);
-        transition: right var(--transition-base);
-        gap: 4px;
+        transform: translate3d(100%, 0, 0);
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        gap: 8px;
+        will-change: transform;
+    }
+
+    [data-theme="light"] .nav-links {
+        background: rgba(245, 245, 255, 0.75);
     }
 
     .nav-links.open {
-        right: 0;
+        transform: translate3d(0, 0, 0);
     }
 
+    .nav-active-pill {
+        display: none !important; /* Hide sliding pill on mobile */
+    }
+
+    .nav-links li {
+        width: 100%;
+        opacity: 0;
+        transform: translate3d(24px, 0, 0);
+        transition: opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1), transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+        transition-delay: 0s;
+        will-change: transform, opacity;
+    }
+
+    .nav-links.open li {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .nav-links.open li:nth-of-type(1) { transition-delay: 0.08s; }
+    .nav-links.open li:nth-of-type(2) { transition-delay: 0.14s; }
+    .nav-links.open li:nth-of-type(3) { transition-delay: 0.2s; }
+    .nav-links.open li:nth-of-type(4) { transition-delay: 0.26s; }
+
     .nav-link {
-        font-size: 1rem;
-        padding: 12px 20px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        padding: 14px 20px;
         width: 100%;
         text-align: left;
+        display: flex;
+        align-items: center;
+        border-radius: 12px;
+        color: var(--text-secondary);
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        border: 1px solid transparent;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        color: var(--accent-cyan);
+        background: rgba(0, 212, 255, 0.06);
+        border-color: rgba(0, 212, 255, 0.15);
+        padding-left: 28px; /* Smooth micro-interaction slide inset */
+    }
+
+    [data-theme="light"] .nav-link:hover,
+    [data-theme="light"] .nav-link.active {
+        background: rgba(0, 180, 220, 0.06);
+        border-color: rgba(0, 180, 220, 0.15);
     }
 
     .nav-hamburger {

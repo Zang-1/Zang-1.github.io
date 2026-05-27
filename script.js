@@ -38,34 +38,94 @@ function typeText() {
 }
 
 // ========================================
-// NAVBAR
+// NAVBAR & NAVIGATION
 // ========================================
 const navbar = document.getElementById('navbar');
 const navLinks = document.getElementById('navLinks');
 const navHamburger = document.getElementById('navHamburger');
 const allNavLinks = document.querySelectorAll('.nav-link');
+const activePill = document.getElementById('navActivePill');
 
-let cachedSections = [];
-
-// Cache section offsets to prevent layout thrashing (Forced Synchronous Layout) on scroll
-function cacheSectionDimensions() {
-    const sections = document.querySelectorAll('.section, .hero');
-    cachedSections = Array.from(sections).map(section => ({
-        id: section.getAttribute('id'),
-        top: section.offsetTop,
-        height: section.offsetHeight
-    }));
+// Update active sliding indicator pill on desktop
+function updateActivePillPosition(activeLink) {
+    if (!activePill) return;
+    
+    if (window.innerWidth <= 900) {
+        activePill.style.opacity = '0';
+        return;
+    }
+    
+    if (activeLink && activeLink.classList.contains('active')) {
+        const linkRect = activeLink.getBoundingClientRect();
+        const navLinksRect = navLinks.getBoundingClientRect();
+        
+        const relativeLeft = linkRect.left - navLinksRect.left;
+        const linkWidth = linkRect.width;
+        
+        activePill.style.left = `${relativeLeft}px`;
+        activePill.style.width = `${linkWidth}px`;
+        activePill.style.opacity = '1';
+    } else {
+        activePill.style.opacity = '0';
+    }
 }
 
-// Recalculate dimensions when page fully loads and when viewport changes size
-window.addEventListener('load', cacheSectionDimensions);
-window.addEventListener('resize', cacheSectionDimensions);
+// Activate nav link
+function activateLink(link) {
+    if (link && !link.classList.contains('active')) {
+        allNavLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        updateActivePillPosition(link);
+    }
+}
 
-// Scroll effect with passive listener for maximum frame rate
+// Highly optimized IntersectionObserver for active section tracking (0% layout thrashing!)
+const observerOptions = {
+    root: null,
+    rootMargin: '-35% 0px -45% 0px', // Center-top active region
+    threshold: 0
+};
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            const targetLink = Array.from(allNavLinks).find(link => link.getAttribute('href') === `#${id}`);
+            if (targetLink) {
+                activateLink(targetLink);
+            }
+        }
+    });
+}, observerOptions);
+
+// Observe all page sections
+const pageSections = document.querySelectorAll('.section, .hero');
+pageSections.forEach(section => {
+    if (section.getAttribute('id')) {
+        sectionObserver.observe(section);
+    }
+});
+
+// Hover-follow pill micro-interactions (Desktop only)
+allNavLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 900) {
+            updateActivePillPosition(link);
+        }
+    });
+    
+    link.addEventListener('mouseleave', () => {
+        if (window.innerWidth > 900) {
+            const currentActiveLink = document.querySelector('.nav-link.active');
+            updateActivePillPosition(currentActiveLink);
+        }
+    });
+});
+
+// Performance optimized scroll header transition
 window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     
-    // Add/remove class only when crossing the 50px boundary
     if (scrollY > 50) {
         if (!navbar.classList.contains('scrolled')) {
             navbar.classList.add('scrolled');
@@ -75,11 +135,22 @@ window.addEventListener('scroll', () => {
             navbar.classList.remove('scrolled');
         }
     }
-    updateActiveNav();
 }, { passive: true });
 
-// Hamburger toggle
-navHamburger.addEventListener('click', () => {
+// Responsive resize and load updates for pill
+window.addEventListener('resize', () => {
+    const currentActiveLink = document.querySelector('.nav-link.active');
+    updateActivePillPosition(currentActiveLink);
+});
+
+window.addEventListener('load', () => {
+    const currentActiveLink = document.querySelector('.nav-link.active');
+    updateActivePillPosition(currentActiveLink);
+});
+
+// Hamburger mobile menu toggle
+navHamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
     navHamburger.classList.toggle('active');
     navLinks.classList.toggle('open');
 });
@@ -92,31 +163,18 @@ allNavLinks.forEach(link => {
     });
 });
 
-// Active nav link on scroll (0 layout reflows!)
-function updateActiveNav() {
-    if (cachedSections.length === 0) {
-        cacheSectionDimensions();
-    }
-    
-    const scrollPos = window.scrollY + 150;
-
-    for (let i = 0; i < cachedSections.length; i++) {
-        const { id, top, height } = cachedSections[i];
-
-        if (scrollPos >= top && scrollPos < top + height) {
-            allNavLinks.forEach(link => {
-                if (link.getAttribute('href') === `#${id}`) {
-                    if (!link.classList.contains('active')) {
-                        // Clear active status of other links first
-                        allNavLinks.forEach(l => l.classList.remove('active'));
-                        link.classList.add('active');
-                    }
-                }
-            });
-            break; // Active section found, exit early!
+// Click outside mobile menu to close smoothly (native feel)
+document.addEventListener('click', (e) => {
+    if (navLinks.classList.contains('open')) {
+        const clickedInsideMenu = navLinks.contains(e.target);
+        const clickedHamburger = navHamburger.contains(e.target);
+        
+        if (!clickedInsideMenu && !clickedHamburger) {
+            navHamburger.classList.remove('active');
+            navLinks.classList.remove('open');
         }
     }
-}
+});
 
 // ========================================
 // THEME TOGGLE
@@ -202,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
     typeText();
     revealOnScroll();
     initInteractiveBackgroundPlexus();
-    cacheSectionDimensions();
     init3DTiltEffect();
     
     // Lightbox next/prev click event listeners
