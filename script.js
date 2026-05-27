@@ -234,9 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    // Initialize dynamic Spotify IFrame players
-    initSpotifyIframeAPI();
 });
 
 // ========================================
@@ -891,59 +888,6 @@ function init3DTiltEffect() {
             frame.style.transition = 'none';
         });
     });
-}
-
-// ========================================
-// SPOTIFY IFRAME API INTEGRATION
-// ========================================
-window.onSpotifyIframeApiReady = (IFrameAPI) => {
-    const placeholders = document.querySelectorAll('.spotify-player-container');
-    if (placeholders.length === 0) return;
-
-    const equalizer = document.querySelector('.equalizer');
-    let activePlayers = new Set(); // Keep track of track IDs that are playing
-
-    placeholders.forEach((placeholder) => {
-        const trackId = placeholder.getAttribute('data-spotify-id');
-        if (!trackId) return;
-
-        const options = {
-            uri: `spotify:track:${trackId}`,
-            width: '100%',
-            height: '152'
-        };
-
-        IFrameAPI.createController(placeholder, options, (EmbedController) => {
-            EmbedController.addListener('playback_update', (e) => {
-                const isPaused = e.data.isPaused;
-                if (!isPaused) {
-                    activePlayers.add(trackId);
-                } else {
-                    activePlayers.delete(trackId);
-                }
-
-                // If any player is actively playing music, animate equalizer fast
-                if (equalizer) {
-                    if (activePlayers.size > 0) {
-                        equalizer.classList.add('playing');
-                    } else {
-                        equalizer.classList.remove('playing');
-                    }
-                }
-            });
-        });
-    });
-};
-
-function initSpotifyIframeAPI() {
-    const placeholders = document.querySelectorAll('.spotify-player-container');
-    if (placeholders.length === 0) return;
-
-    // Load Spotify IFrame API script dynamically
-    const script = document.createElement('script');
-    script.src = "https://open.spotify.com/embed/iframe-api/v1";
-    script.async = true;
-    document.body.appendChild(script);
 }
 
 
