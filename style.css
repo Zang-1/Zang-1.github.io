@@ -834,7 +834,7 @@ img {
    MUSIC SECTION
    ======================================== */
 .music-wrapper {
-    max-width: 700px;
+    max-width: 850px;
     margin: 0 auto;
     padding: 40px;
     text-align: center;
@@ -885,6 +885,20 @@ img {
 .spotify-embed {
     border-radius: 12px;
     overflow: hidden;
+}
+
+.spotify-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+    .spotify-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
 }
 
 /* ========================================
