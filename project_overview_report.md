@@ -88,22 +88,28 @@ Nằm ngay trên phần tiêu đề giới thiệu tên, thiết kế dạng Gla
 
 ---
 
-## 4. LỊCH SỬ CẬP NHẬT THEO TỪNG PHIÊN BẢN (VERSION TIMELINE)
+## 4. LẠCH SỬ CẬP NHẬT THEO TỪNG PHIÊN BẢN (VERSION TIMELINE)
 
-Dưới đây là bảng phân tích lịch sử cập nhật chi tiết, ánh xạ từng sự thay đổi mã nguồn trong Git thành các phiên bản từ sơ khởi cho đến nay:
+Dưới đây là bảng phân tích lịch sử cập nhật chi tiết, ánh xạ từng sự thay đổi mã nguồn trong Git thành các phiên bản theo trình tự thời gian tăng dần:
 
-### THẾ HỆ 3.x - ĐỒNG BỘ ĐA PHƯƠNG TIỆN & HỆ THỐNG LIVE WIDGET
-Tập trung vào hoàn thiện trải nghiệm kết nối thông minh, tối ưu hóa các sự kiện cuộn trang và phát hành widget thời gian thực.
+### THẾ HỆ 1.x - KHAI HOANG NỀN TẢNG VÀ HOÀN THIỆN ĐỒNG BỘ SƠ KHỞI
+Giai đoạn nền móng ban đầu, xây dựng cấu trúc HTML, đồng nhất màu sắc toàn trang và thử nghiệm cuộn trang.
 
 | Phiên bản | Mã Commit | Loại cập nhật | Nội dung mô tả chi tiết kỹ thuật | Tác động hệ thống |
 | :--- | :--- | :--- | :--- | :--- |
-| **version 3.2** | `0d308f7` | **Feat & UI Glow** | Bổ sung widget đồng hồ Saigon Time dạng `23:59`. Đồng nhất cường độ phát sáng hover cho 2 chiếc badge bằng hiệu ứng quầng sáng `box-shadow` đồng điệu màu sắc (Green Glow và Cyan Glow). | Giao diện Hero đạt sự cân bằng thẩm mỹ, mang đậm hơi thở công nghệ cao. |
-| **version 3.1** | `05432f1` | **Perf Navigation** | Nâng cấp menu điều hướng tự động trượt bằng `IntersectionObserver`. Sử dụng thuộc tính `translate3d` để kích hoạt tăng tốc phần cứng phần menu. | Triệt tiêu hoàn toàn độ trễ layout thrashing khi cuộn. Menu lướt mượt mà. |
-| **version 3.0.2** | `5476c56` | **Refactor Soundwave**| Đưa hoạt ảnh sóng âm thanh của nhạc về vòng lặp liên tục và tinh giản cấu trúc mã nguồn Iframe của Spotify. | Tải trang nhanh hơn, giảm tải hoạt động CPU. |
-| **version 3.0.1** | `924a7cc` | **Fail-safe Spotify** | Triển khai kiến trúc dự phòng (fail-safe) cho trình phát nhạc Spotify giữa iframe tĩnh và API callback động. | Tránh lỗi dừng tải trang khi API Spotify phản hồi chậm hoặc bị chặn. |
-| **version 3.0.0** | `09256b0` | **Race Condition Fix**| Khắc phục lỗi bất đồng bộ (Race Condition) trong quá trình khởi tạo API Spotify bằng cách khai báo callback globally. | Trình phát nhạc hoạt động ổn định trong mọi lượt tải trang. |
-| **version 2.9.2** | `9d12928` | **Spotify Sync API** | Kết nối Spotify IFrame API đồng bộ bật/tắt sóng nhạc động và điều chỉnh điểm gãy responsive lưới nhạc ở `580px`. | Hiển thị phù hợp lưới nhạc trên mọi kích cỡ màn hình di động lớn nhỏ. |
-| **version 2.9.1** | `4487c18` | **Music Grid 6x** | Nâng cấp trình nghe nhạc Spotify lên thành lưới 6 bài hát độc lập đại diện cho cá tính âm nhạc cá nhân. | Đa dạng nội dung nghe nhạc, tăng tương tác của khách ghé thăm. |
+| **version 1.0** | `1be1452` | **Initial Release** | Thiết lập cấu trúc giao diện Portfolio sơ khởi. Tùy biến lại hình dáng con trỏ chuột độc bản của Bảo Giang. | Đặt nền móng hình thành nên bộ khung của dự án. |
+| **version 1.1.0** | `6784d3f` | **Content Tweaks** | Căn chỉnh và sửa lại các đoạn văn bản hiển thị lỗi font hoặc sai chính tả. | Chữ viết hiển thị chuẩn xác hơn. |
+| **version 1.1.1** | `0ffbf1e` | **Git Merge** | Giải quyết xung đột (conflict) nhánh trong Git. | Đồng bộ mã nguồn chính xác. |
+| **version 1.1.2** | `4bd6d55` | **Hotfix** | Sửa các lỗi nhỏ và tối ưu lại một số phần render logic ban đầu. | Hệ thống hoạt động ổn định hơn. |
+| **version 1.2** | `fffa446` | **Gallery Sizing** | Tối ưu hóa chiều cao hiển thị của phần Gallery ảnh và sửa lỗi lưu cache. | Giúp bố cục trang ảnh trông gọn gàng, vừa vặn khung hình. |
+| **version 1.3** | `5378df9` | **Script Query** | Tăng phiên bản `script.js` lên đầu `v2.1` để ép reload file script mới. | Tránh lỗi xung đột script cũ-mới trong cache. |
+| **version 1.4** | `5abb625` | **Motorcycles Up** | Bổ sung thêm 2 bức ảnh độ phân giải cao vào Album Xe Máy (Motorcycles) và nâng asset lên `v2.2`. | Làm phong phú thêm bộ sưu tập hình ảnh cá nhân. |
+| **version 1.5** | `420ffc8` | **Deep Black UI** | Đồng nhất tông màu nền đen của toàn bộ các phần trên website, sửa lỗi lệch tông xám giữa các khối. | Giao diện liền mạch, tạo cảm giác vô cực. |
+| **version 1.6.0** | `eb9c395`<br>`335a9b4` | **Snap & Playlist** | Thử nghiệm tính năng cuộn từng trang đầy màn hình (Snap scroll) và Thay thế 3 bài hát tĩnh mặc định sang Playlist Spotify cá nhân của Bảo Giang. | Thể hiện cá tính âm nhạc. |
+| **version 1.6.1** | `6447454` | **Revert Snap** | Hủy bỏ tính năng cuộn từng trang đầy màn hình (Snap scroll). | Trả lại trải nghiệm cuộn tự do mượt mà, tự nhiên vốn có của web. |
+| **version 1.7** | `1b950f6` | **Asset Cache bypass**| Nâng phiên bản truy vấn asset để ép trình duyệt bỏ qua cache cũ. | Hỗ trợ người dùng nhận thấy cập nhật mới. |
+| **version 1.8** | `4452322` | **Scroll Optim** | Tối ưu hóa sự kiện cuộn trang bằng cờ hiệu `{ passive: true }` để giảm giật hình. | Triệt tiêu lỗi nháy trắng trình duyệt. |
+| **version 1.9** | `f30315c` | **Spotify Theme** | Truyền cấu hình theme tối/sáng vào mã nhúng Spotify playlist. | Lưới phát nhạc đổi màu nền tự động ăn khớp theo Dark/Light Mode. |
 
 ---
 
@@ -112,36 +118,30 @@ Tập trung phát triển động cơ hạt chất lưu, lực đẩy vật lý 
 
 | Phiên bản | Mã Commit | Loại cập nhật | Nội dung mô tả chi tiết kỹ thuật | Tác động hệ thống |
 | :--- | :--- | :--- | :--- | :--- |
-| **version 2.8** | `c780354` | **Physics Momentum** | Thiết lập thuật toán truyền động lượng vật lý dựa trên vận tốc di chuyển chuột (Momentum Transfer). | Hạt bay tự nhiên và phản hồi sinh động theo gia tốc của tay. |
-| **version 2.7** | `b5c6e30` | **Fluid Repulsion** | Thay thế lực hút hạt cơ bản bằng lực đẩy chất lưu (Fluid Mouse Repulsion). | Tạo cảm giác các hạt như dòng nước rẽ ra khi chuột đi qua. |
-| **version 2.6** | `c47373c` | **Plexus Opacity** | Tăng mật độ số lượng hạt nền và giảm độ mờ (opacity) của các đường nối plexus liên kết. | Giao diện nền có chiều sâu hơn mà không bị rối mắt. |
-| **version 2.5** | `23cdaca` | **Particle Lifespan** | Triển khai vòng đời cho hạt (Lifespan) và cơ chế tự động tái sinh tại rìa màn hình khi hạt bị hấp thụ hoặc quá tuổi. | Các hạt nền tự động sinh-tử liên tục, duy trì sự cân bằng mật độ. |
-| **version 2.4** | `e7a18a1` | **Adaptive Plexus** | Viết Động cơ Hạt Thích ứng (Adaptive Particle Engine) hỗ trợ tự động cắt giảm cấu hình trên Mobile và thêm sóng xung kích khi tap. | Di động chạy mượt mà và có thêm tương tác gõ màn hình tạo sóng nước chân thực. |
-| **version 2.3** | `52bb6ac` | **Translation UI** | Dịch toàn bộ nhãn hành động ở Album ảnh sang tiếng Anh và tăng số lượng hạt nền máy tính lên `160` hạt. | Chuyên nghiệp hóa ngôn ngữ hiển thị quốc tế. |
-| **version 2.2** | `caa05d8` | **Plexus Tuning** | Tối ưu hóa khoảng cách liên kết mạng lưới hạt plexus và tinh chỉnh lượng hạt nền. | Tăng tính nghệ thuật cho không gian nền. |
-| **version 2.1** | `3c0ac70` | **Cache Busting** | Tăng phiên bản truy vấn của các tệp tĩnh (styles/scripts) lên `v2.4` để xóa bộ nhớ đệm cache của trình duyệt người dùng. | Đảm bảo người dùng luôn nhận được giao diện mới nhất ngay lập tức khi truy cập. |
 | **version 2.0** | `9ba0676` | **3D Parallax Tilt** | Thiết lập hiệu ứng Parallax nghiêng 3D kết hợp quét ánh sáng chéo (Glare) khi di chuột vào khu vực hình ảnh Album. | Tạo chiều sâu cho phần Gallery hình ảnh. |
+| **version 2.1** | `3c0ac70` | **Cache Busting** | Tăng phiên bản truy vấn của các tệp tĩnh (styles/scripts) lên `v2.4` để xóa bộ nhớ đệm cache của trình duyệt người dùng. | Đảm bảo người dùng luôn nhận được giao diện mới nhất ngay lập tức khi truy cập. |
+| **version 2.2** | `caa05d8` | **Plexus Tuning** | Tối ưu hóa khoảng cách liên kết mạng lưới hạt plexus và tinh chỉnh lượng hạt nền. | Tăng tính nghệ thuật cho không gian nền. |
+| **version 2.3** | `52bb6ac` | **Translation UI** | Dịch toàn bộ nhãn hành động ở Album ảnh sang tiếng Anh và tăng số lượng hạt nền máy tính lên `160` hạt. | Chuyên nghiệp hóa ngôn ngữ hiển thị quốc tế. |
+| **version 2.4** | `e7a18a1` | **Adaptive Plexus** | Viết Động cơ Hạt Thích ứng (Adaptive Particle Engine) hỗ trợ tự động cắt giảm cấu hình trên Mobile và thêm sóng xung kích khi tap. | Di động chạy mượt mà và có thêm tương tác gõ màn hình tạo sóng nước chân thực. |
+| **version 2.5** | `23cdaca` | **Particle Lifespan** | Triển khai vòng đời cho hạt (Lifespan) và cơ chế tự động tái sinh tại rìa màn hình khi hạt bị hấp thụ hoặc quá tuổi. | Các hạt nền tự động sinh-tử liên tục, duy trì sự cân bằng mật độ. |
+| **version 2.6** | `c47373c` | **Plexus Opacity** | Tăng mật độ số lượng hạt nền và giảm độ mờ (opacity) của các đường nối plexus liên kết. | Giao diện nền có chiều sâu hơn mà không bị rối mắt. |
+| **version 2.7** | `b5c6e30` | **Fluid Repulsion** | Thay thế lực hút hạt cơ bản bằng lực đẩy chất lưu (Fluid Mouse Repulsion). | Tạo cảm giác các hạt như dòng nước rẽ ra khi chuột đi qua. |
+| **version 2.8** | `c780354` | **Physics Momentum** | Thiết lập thuật toán truyền động lượng vật lý dựa trên vận tốc di chuyển chuột (Momentum Transfer). | Hạt bay tự nhiên và phản hồi sinh động theo gia tốc của tay. |
 
 ---
 
-### THẾ HỆ 1.x - KHAI HOANG NỀN TẢNG VÀ HOÀN THIỆN ĐỒNG BỘ SƠ KHỞI
-Giai đoạn nền móng ban đầu, xây dựng cấu trúc HTML, đồng nhất màu sắc toàn trang và thử nghiệm cuộn trang.
+### THẾ HỆ 3.x - ĐỒNG BỘ ĐA PHƯƠNG TIỆN & HỆ THỐNG LIVE WIDGET
+Tập trung vào hoàn thiện trải nghiệm kết nối thông minh, tối ưu hóa các sự kiện cuộn trang và phát hành widget thời gian thực.
 
 | Phiên bản | Mã Commit | Loại cập nhật | Nội dung mô tả chi tiết kỹ thuật | Tác động hệ thống |
 | :--- | :--- | :--- | :--- | :--- |
-| **version 1.9** | `f30315c` | **Spotify Theme** | Truyền cấu hình theme tối/sáng vào mã nhúng Spotify playlist. | Lưới phát nhạc đổi màu nền tự động ăn khớp theo Dark/Light Mode. |
-| **version 1.8** | `4452322` | **Scroll Optim** | Tối ưu hóa sự kiện cuộn trang bằng cờ hiệu `{ passive: true }` để giảm giật hình. | Triệt tiêu lỗi nháy trắng trình duyệt. |
-| **version 1.7** | `1b950f6` | **Asset Cache bypass**| Nâng phiên bản truy vấn asset để ép trình duyệt bỏ qua cache cũ. | Hỗ trợ người dùng nhận thấy cập nhật mới. |
-| **version 1.6.1** | `6447454` | **Revert Snap** | Hủy bỏ tính năng cuộn từng trang đầy màn hình (Snap scroll). | Trả lại trải nghiệm cuộn tự do mượt mà, tự nhiên vốn có của web. |
-| **version 1.6.0** | `eb9c395`<br>`335a9b4` | **Snap & Playlist** | Thử nghiệm tính năng cuộn từng trang đầy màn hình (Snap scroll) và Thay thế 3 bài hát tĩnh mặc định sang Playlist Spotify cá nhân của Bảo Giang. | Thể hiện cá tính âm nhạc. |
-| **version 1.5** | `420ffc8` | **Deep Black UI** | Đồng nhất tông màu nền đen của toàn bộ các phần trên website, sửa lỗi lệch tông xám giữa các khối. | Giao diện liền mạch, tạo cảm giác vô cực. |
-| **version 1.4** | `5abb625` | **Motorcycles Up** | Bổ sung thêm 2 bức ảnh độ phân giải cao vào Album Xe Máy (Motorcycles) và nâng asset lên `v2.2`. | Làm phong phú thêm bộ sưu tập hình ảnh cá nhân. |
-| **version 1.3** | `5378df9` | **Script Query** | Tăng phiên bản `script.js` lên đầu `v2.1` để ép reload file script mới. | Tránh lỗi xung đột script cũ-mới trong cache. |
-| **version 1.2** | `fffa446` | **Gallery Sizing** | Tối ưu hóa chiều cao hiển thị của phần Gallery ảnh và sửa lỗi lưu cache. | Giúp bố cục trang ảnh trông gọn gàng, vừa vặn khung hình. |
-| **version 1.1.2** | `4bd6d55` | **Hotfix** | Sửa các lỗi nhỏ và tối ưu lại một số phần render logic ban đầu. | Hệ thống hoạt động ổn định hơn. |
-| **version 1.1.1** | `0ffbf1e` | **Git Merge** | Giải quyết xung đột (conflict) nhánh trong Git. | Đồng bộ mã nguồn chính xác. |
-| **version 1.1.0** | `6784d3f` | **Content Tweaks** | Căn chỉnh và sửa lại các đoạn văn bản hiển thị lỗi font hoặc sai chính tả. | Chữ viết hiển thị chuẩn xác hơn. |
-| **version 1.0** | `1be1452` | **Initial Release** | Thiết lập cấu trúc giao diện Portfolio sơ khởi. Tùy biến lại hình dáng con trỏ chuột độc bản của Bảo Giang. | Đặt nền móng hình thành nên bộ khung của dự án. |
+| **version 2.9.1** | `4487c18` | **Music Grid 6x** | Nâng cấp trình nghe nhạc Spotify lên thành lưới 6 bài hát độc lập đại diện cho cá tính âm nhạc cá nhân. | Đa dạng nội dung nghe nhạc, tăng tương tác của khách ghé thăm. |
+| **version 2.9.2** | `9d12928` | **Spotify Sync API** | Kết nối Spotify IFrame API đồng bộ bật/tắt sóng nhạc động và điều chỉnh điểm gãy responsive lưới nhạc ở `580px`. | Hiển thị phù hợp lưới nhạc trên mọi kích cỡ màn hình di động lớn nhỏ. |
+| **version 3.0.0** | `09256b0` | **Race Condition Fix**| Khắc phục lỗi bất đồng bộ (Race Condition) trong quá trình khởi tạo API Spotify bằng cách khai báo callback globally. | Trình phát nhạc hoạt động ổn định trong mọi lượt tải trang. |
+| **version 3.0.1** | `924a7cc` | **Fail-safe Spotify** | Triển khai kiến trúc dự phòng (fail-safe) cho trình phát nhạc Spotify giữa iframe tĩnh và API callback động. | Tránh lỗi dừng tải trang khi API Spotify phản hồi chậm hoặc bị chặn. |
+| **version 3.0.2** | `5476c56` | **Refactor Soundwave**| Đưa hoạt ảnh sóng âm thanh của nhạc về vòng lặp liên tục và tinh giản cấu trúc mã nguồn Iframe của Spotify. | Tải trang nhanh hơn, giảm tải hoạt động CPU. |
+| **version 3.1** | `05432f1` | **Perf Navigation** | Nâng cấp menu điều hướng tự động trượt bằng `IntersectionObserver`. Sử dụng thuộc tính `translate3d` để kích hoạt tăng tốc phần cứng phần menu. | Triệt tiêu hoàn toàn độ trễ layout thrashing khi cuộn. Menu lướt mượt mà. |
+| **version 3.2** | `0d308f7` | **Feat & UI Glow** | Bổ sung widget đồng hồ Saigon Time dạng `23:59`. Đồng nhất cường độ phát sáng hover cho 2 chiếc badge bằng hiệu ứng quầng sáng `box-shadow` đồng điệu màu sắc (Green Glow và Cyan Glow). | Giao diện Hero đạt sự cân bằng thẩm mỹ, mang đậm hơi thở công nghệ cao. |
 
 ---
 
