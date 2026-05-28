@@ -1319,6 +1319,10 @@ img {
         height: 240px;
     }
 
+    .hero-title {
+        justify-content: center;
+    }
+
     .hero-socials {
         justify-content: center;
     }
