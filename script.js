@@ -79,10 +79,19 @@ function activateLink(link) {
     }
 }
 
-// Highly optimized IntersectionObserver for active section tracking (0% layout thrashing!)
+// Optimize lookups with an ID-to-link mapping dictionary
+const linkMap = {};
+allNavLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+        linkMap[href.substring(1)] = link;
+    }
+});
+
+// Highly optimized IntersectionObserver for active section tracking
 const observerOptions = {
     root: null,
-    rootMargin: '-35% 0px -45% 0px', // Center-top active region
+    rootMargin: '-35% 0px -45% 0px',
     threshold: 0
 };
 
@@ -90,7 +99,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
-            const targetLink = Array.from(allNavLinks).find(link => link.getAttribute('href') === `#${id}`);
+            const targetLink = linkMap[id];
             if (targetLink) {
                 activateLink(targetLink);
             }
@@ -318,14 +327,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // DYNAMIC PARTICLE PLEXUS (GOOGLE-STYLE BACKGROUND)
 // ========================================
 function initInteractiveBackgroundPlexus() {
-    // 1. DOM Setup
     const canvas = document.getElementById('interactive-bg-canvas');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     
-    // 2. Mouse/Touch Coordinates Tracking
-    let mouse = { x: -1000, y: -1000, active: false, vx: 0, vy: 0, lastX: -1000, lastY: -1000 };
+    let mouse = { x: -1000, y: -1000, active: false, vx: 0, vy: 0, speed: 0, lastX: -1000, lastY: -1000 };
     const supportsHover = window.matchMedia("(hover: hover)").matches;
 
     if (supportsHover) {
@@ -343,14 +350,12 @@ function initInteractiveBackgroundPlexus() {
             mouse.active = false;
         });
 
-        // Click Gravity-Inversion Shockwave
         window.addEventListener('mousedown', () => {
             if (mouse.active) {
                 triggerShockwave(mouse.x, mouse.y);
             }
         });
     } else {
-        // Mobile tap/touchstart micro-interaction shockwave
         window.addEventListener('touchstart', (e) => {
             if (e.touches && e.touches[0]) {
                 const touchX = e.touches[0].clientX;
@@ -360,38 +365,32 @@ function initInteractiveBackgroundPlexus() {
         }, { passive: true });
     }
 
-    // 3. Responsive/Adaptive Particle Plexus Parameters
     let particles = [];
     let isMobileDevice = window.innerWidth <= 768;
     let maxParticles = isMobileDevice ? 60 : 220;
     let connectionDistance = isMobileDevice ? 55 : 80;
     
-    const magneticRadius = 220;
-    const magneticStrength = 0.45;
-    const orbitalStrength = 0.35;
     const friction = 0.94;
 
-    // Fetch theme colors dynamically
     function getThemeColors() {
         const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
         if (isLightTheme) {
             return [
-                '0, 180, 220',  // Cyan/Blue
-                '124, 58, 237', // Violet
-                '220, 80, 150'  // Pink
+                '0, 180, 220',
+                '124, 58, 237',
+                '220, 80, 150'
             ];
         } else {
             return [
-                '0, 212, 255',  // Neon Cyan
-                '124, 58, 237', // Violet
-                '244, 114, 182' // Neon Pink
+                '0, 212, 255',
+                '124, 58, 237',
+                '244, 114, 182'
             ];
         }
     }
 
     let activeColors = getThemeColors();
 
-    // Re-check theme on changes
     const themeObserver = new MutationObserver(() => {
         activeColors = getThemeColors();
     });
@@ -408,18 +407,17 @@ function initInteractiveBackgroundPlexus() {
             this.vy = (Math.random() - 0.5) * 0.8;
             this.baseVx = this.vx;
             this.baseVy = this.vy;
-            this.radius = Math.random() * 2 + 1.2; // 1.2px to 3.2px
-            this.color = activeColors[Math.floor(Math.random() * activeColors.length)];
-            this.targetAlpha = Math.random() * 0.4 + 0.3; // 0.3 to 0.7 base opacity
+            this.radius = Math.random() * 2 + 1.2;
+            this.colorIndex = Math.floor(Math.random() * activeColors.length);
+            this.targetAlpha = Math.random() * 0.4 + 0.3;
             this.alpha = this.targetAlpha;
-            this.maxLife = Math.random() * 400 + 400; // ~6.6s to 13.3s at 60fps
-            this.life = Math.random() * this.maxLife; // Stagger initial lifetime to prevent bulk blinks
+            this.maxLife = Math.random() * 400 + 400;
+            this.life = Math.random() * this.maxLife;
         }
 
         reset(atEdge = true) {
             if (atEdge) {
-                // Respawn at a random edge of the screen
-                const edge = Math.floor(Math.random() * 4); // 0: Top, 1: Right, 2: Bottom, 3: Left
+                const edge = Math.floor(Math.random() * 4);
                 const offset = 10;
                 if (edge === 0) {
                     this.x = Math.random() * canvas.width;
@@ -435,7 +433,6 @@ function initInteractiveBackgroundPlexus() {
                     this.y = Math.random() * canvas.height;
                 }
             } else {
-                // Respawn at a completely random position inside the canvas
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
             }
@@ -445,83 +442,67 @@ function initInteractiveBackgroundPlexus() {
             this.baseVx = this.vx;
             this.baseVy = this.vy;
             this.radius = Math.random() * 2 + 1.2;
-            this.color = activeColors[Math.floor(Math.random() * activeColors.length)];
-            this.alpha = 0; // Start fully transparent
+            this.colorIndex = Math.floor(Math.random() * activeColors.length);
+            this.alpha = 0;
             this.targetAlpha = Math.random() * 0.4 + 0.3;
             this.maxLife = Math.random() * 400 + 400;
             this.life = this.maxLife;
         }
 
         update() {
-            // Decrease life remaining
             this.life--;
 
-            // Handle fading out when near death, or fading in when newly spawned
             if (this.life <= 0) {
-                this.reset(false); // Respawn somewhere on the screen when dead of old age
+                this.reset(false);
             } else if (this.life < 50) {
-                // Fade out before death
                 this.alpha -= 0.015;
                 if (this.alpha < 0) this.alpha = 0;
             } else if (this.alpha < this.targetAlpha) {
-                // Fade in
                 this.alpha += 0.015;
                 if (this.alpha > this.targetAlpha) this.alpha = this.targetAlpha;
             }
 
-            // Apply fluid repulsion from mouse cursor if mouse is nearby and particle is healthy
             if (mouse.active && this.life > 50) {
-                const dx = this.x - mouse.x; // Vector pointing away from mouse
+                const dx = this.x - mouse.x;
                 const dy = this.y - mouse.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+                const distSq = dx * dx + dy * dy;
+                const repelRadius = 80;
+                const repelRadiusSq = repelRadius * repelRadius;
 
-                const repelRadius = 80; // Compact radius like a pillow
-
-                if (dist < repelRadius) {
-                    // Force is strongest at the center and decays linearly to the outer radius
+                if (distSq < repelRadiusSq) {
+                    const dist = Math.sqrt(distSq);
                     const force = (repelRadius - dist) / repelRadius;
                     
-                    // Real-time mouse speed calculation
-                    const mouseSpeed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
-                    
-                    // Momentum transfer: soft nudge when static, strong impulse when swiped
-                    const baseStrength = 0.15; // Gentle displacement for quiet hover
-                    const speedInfluence = 0.08; // Impact multiplier based on mouse movement speed
-                    const totalStrength = baseStrength + mouseSpeed * speedInfluence;
+                    const baseStrength = 0.15;
+                    const speedInfluence = 0.08;
+                    const totalStrength = baseStrength + mouse.speed * speedInfluence;
 
-                    // Acceleration away from mouse
                     const pushX = (dx / (dist || 1)) * force * totalStrength;
                     const pushY = (dy / (dist || 1)) * force * totalStrength;
 
-                    // Apply physics forces (flows away like fluid)
                     this.vx += pushX;
                     this.vy += pushY;
                 }
             }
 
-            // Apply friction/drag to stabilize movements
             this.vx *= friction;
             this.vy *= friction;
 
-            // Maintain a subtle base float drift when far away
             const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
             if (speed < 0.2) {
                 this.vx += (Math.random() - 0.5) * 0.05;
                 this.vy += (Math.random() - 0.5) * 0.05;
             }
 
-            // Apply speed caps
             const maxSpeed = 7;
             if (speed > maxSpeed) {
                 this.vx = (this.vx / speed) * maxSpeed;
                 this.vy = (this.vy / speed) * maxSpeed;
             }
 
-            // Move
             this.x += this.vx;
             this.y += this.vy;
 
-            // Boundaries bounce
             if (this.x < 0) {
                 this.x = 0;
                 this.vx *= -1;
@@ -542,17 +523,15 @@ function initInteractiveBackgroundPlexus() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+            ctx.fillStyle = `rgba(${activeColors[this.colorIndex]}, ${this.alpha})`;
             ctx.fill();
         }
     }
 
-    // Initialize Canvas Particles
     function initParticles() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
-        // Dynamically update parameters on layout changes/resize
         isMobileDevice = window.innerWidth <= 768;
         maxParticles = isMobileDevice ? 60 : 220;
         connectionDistance = isMobileDevice ? 55 : 80;
@@ -565,7 +544,6 @@ function initInteractiveBackgroundPlexus() {
 
     initParticles();
 
-    // Handle Window Resize
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -574,41 +552,48 @@ function initInteractiveBackgroundPlexus() {
         }, 200);
     });
 
-    // 6. Click Shockwave Force
     function triggerShockwave(x, y) {
         const shockwaveRadius = 250;
         const shockwaveForce = 22;
+        const shockwaveRadiusSq = shockwaveRadius * shockwaveRadius;
 
         particles.forEach(p => {
             const dx = p.x - x;
             const dy = p.y - y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            const distSq = dx * dx + dy * dy;
 
-            if (dist < shockwaveRadius) {
-                // Blast force is strongest at center
+            if (distSq < shockwaveRadiusSq) {
+                const dist = Math.sqrt(distSq);
                 const force = (shockwaveRadius - dist) / shockwaveRadius;
                 const pushX = (dx / (dist || 1)) * force * shockwaveForce;
                 const pushY = (dy / (dist || 1)) * force * shockwaveForce;
 
-                // Instantly blow particles outward
                 p.vx += pushX;
                 p.vy += pushY;
             }
         });
     }
 
-    // 7. Render/Animation Loop
+    let isPageVisible = true;
+    let animationId = null;
+
     function animate() {
-        // Clear canvas
+        if (!isPageVisible) {
+            animationId = null;
+            return;
+        }
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Calculate mouse velocity per frame
+        // Calculate mouse velocity and speed once per frame
         if (mouse.active && mouse.lastX !== -1000) {
             mouse.vx = mouse.x - mouse.lastX;
             mouse.vy = mouse.y - mouse.lastY;
+            mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
         } else {
             mouse.vx = 0;
             mouse.vy = 0;
+            mouse.speed = 0;
             mouse.lastX = -1000;
         }
 
@@ -617,73 +602,82 @@ function initInteractiveBackgroundPlexus() {
             mouse.lastY = mouse.y;
         }
 
-        // A. Update and draw particles
+        // 1. Update and draw particles
         particles.forEach(p => {
             p.update();
             p.draw();
         });
 
-        // B. Google-style Plexus Network Lines
-        ctx.lineWidth = 0.8;
+        // 2. Optimized Plexus Line Grouping / Batching (Draws in at most 12 path strokes!)
+        const paths = Array.from({ length: 3 }, () => Array.from({ length: 4 }, () => []));
+        const connectionDistanceSq = connectionDistance * connectionDistance;
+
         for (let i = 0; i < particles.length; i++) {
+            const p1 = particles[i];
             for (let j = i + 1; j < particles.length; j++) {
-                const p1 = particles[i];
                 const p2 = particles[j];
                 const dx = p1.x - p2.x;
                 const dy = p1.y - p2.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+                const distSq = dx * dx + dy * dy;
 
-                if (dist < connectionDistance) {
-                    const lineAlpha = (1.0 - (dist / connectionDistance)) * 0.12;
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    
-                    ctx.strokeStyle = `rgba(${p1.color}, ${lineAlpha})`;
-                    ctx.stroke();
+                if (distSq < connectionDistanceSq) {
+                    const dist = Math.sqrt(distSq);
+                    const alphaRatio = 1.0 - (dist / connectionDistance);
+                    const bracket = Math.min(3, Math.floor(alphaRatio * 4));
+                    paths[p1.colorIndex][bracket].push({ x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y });
                 }
             }
         }
 
-        requestAnimationFrame(animate);
+        ctx.lineWidth = 0.8;
+        for (let c = 0; c < 3; c++) {
+            const colorStr = activeColors[c];
+            for (let b = 0; b < 4; b++) {
+                const lines = paths[c][b];
+                if (lines.length === 0) continue;
+                
+                ctx.beginPath();
+                for (let l = 0; l < lines.length; l++) {
+                    const line = lines[l];
+                    ctx.moveTo(line.x1, line.y1);
+                    ctx.lineTo(line.x2, line.y2);
+                }
+                const alpha = ((b + 0.5) / 4) * 0.12;
+                ctx.strokeStyle = `rgba(${colorStr}, ${alpha})`;
+                ctx.stroke();
+            }
+        }
+
+        animationId = requestAnimationFrame(animate);
     }
 
-    // Pause animation if window is hidden to conserve CPU/Battery
-    let isPageVisible = true;
     document.addEventListener('visibilitychange', () => {
         isPageVisible = document.visibilityState === 'visible';
-    });
-
-    // Start loop
-    requestAnimationFrame(function frame() {
         if (isPageVisible) {
-            animate();
-        } else {
-            requestAnimationFrame(frame);
+            if (!animationId) {
+                animationId = requestAnimationFrame(animate);
+            }
         }
     });
+
+    animationId = requestAnimationFrame(animate);
 }
 
 // ========================================
 // INTERACTIVE GALLERY LOGIC
 // ========================================
 
-// 1. Handle missing images by dynamically showing a premium glass placeholder
 function handleImageError(imgEl, placeholderTitle) {
-    imgEl.style.display = 'none'; // Hide the broken image element
+    imgEl.style.display = 'none';
     
-    // Hide the search search-plus hover overlay for empty slots
     const parent = imgEl.parentElement;
     const overlay = parent.querySelector('.item-overlay');
     if (overlay) {
         overlay.style.display = 'none';
     }
     
-    // Prevent double generation of placeholder cards
     if (parent.querySelector('.gallery-placeholder-card')) return;
     
-    // Determine icon based on category type in source path
     let iconClass = 'fa-image';
     if (imgEl.src.includes('billiards')) {
         iconClass = 'fa-8-ball';
@@ -693,7 +687,6 @@ function handleImageError(imgEl, placeholderTitle) {
         iconClass = 'fa-camera';
     }
     
-    // Generate placeholder card
     const card = document.createElement('div');
     card.className = 'gallery-placeholder-card';
     card.innerHTML = `
@@ -703,12 +696,9 @@ function handleImageError(imgEl, placeholderTitle) {
     `;
     
     parent.appendChild(card);
-    
-    // Disable clicking lightbox for empty placeholders
     parent.style.cursor = 'default';
 }
 
-// 2. Expand clicked gallery frame and hide the other two frames smoothly
 function expandGalleryFrame(frameId) {
     const frames = {
         'billiards': document.getElementById('frame-billiards'),
@@ -727,7 +717,6 @@ function expandGalleryFrame(frameId) {
     
     if (!container || !titleEl) return;
     
-    // Set titles based on category
     const titles = {
         'billiards': 'Album Bản Thân (Myself) 👤',
         'motorcycles': 'Album Xe Máy (Motorcycles) 🏍️',
@@ -736,7 +725,6 @@ function expandGalleryFrame(frameId) {
     
     titleEl.textContent = titles[frameId] || 'Album';
     
-    // Transition frames: active scales up, others fade & collapse
     Object.keys(frames).forEach(key => {
         const frame = frames[key];
         if (frame) {
@@ -750,7 +738,6 @@ function expandGalleryFrame(frameId) {
         }
     });
     
-    // Hide all grids first, then show the requested one
     Object.keys(grids).forEach(key => {
         const grid = grids[key];
         if (grid) {
@@ -758,10 +745,8 @@ function expandGalleryFrame(frameId) {
         }
     });
     
-    // Show container
     container.style.display = 'block';
     
-    // Smoothly scroll to the active frame header
     setTimeout(() => {
         const activeFrame = frames[frameId];
         if (activeFrame) {
@@ -770,7 +755,6 @@ function expandGalleryFrame(frameId) {
     }, 400);
 }
 
-// 3. Close the expanded category grid and restore all three frames
 function closeExpandedFrame() {
     const frames = [
         document.getElementById('frame-billiards'),
@@ -780,19 +764,16 @@ function closeExpandedFrame() {
     
     const container = document.getElementById('photoGridContainer');
     
-    // Restore all frames visibility
     frames.forEach(frame => {
         if (frame) {
             frame.classList.remove('active-frame', 'collapsed-frame');
         }
     });
     
-    // Hide container
     if (container) {
         container.style.display = 'none';
     }
     
-    // Smoothly scroll back to the gallery section header
     setTimeout(() => {
         const gallerySection = document.getElementById('gallery');
         if (gallerySection) {
@@ -801,14 +782,11 @@ function closeExpandedFrame() {
     }, 100);
 }
 
-// Global variables for lightbox slide navigation
 let activeAlbumImages = [];
 let currentImageIndex = -1;
 
-// 4. Open image in lightbox (for valid images only)
 function openLightbox(itemEl, imgSrc, captionText) {
     const img = itemEl.querySelector('img');
-    // If the image is hidden (placeholder is active), do not open the lightbox
     if (img && img.style.display === 'none') {
         return;
     }
@@ -819,11 +797,9 @@ function openLightbox(itemEl, imgSrc, captionText) {
     
     if (!lightbox || !lightboxImg || !caption) return;
     
-    // Find all valid images in the current active grid
     const activeGrid = itemEl.closest('.photo-grid');
     if (activeGrid) {
         const allItems = Array.from(activeGrid.querySelectorAll('.gallery-item'));
-        // Filter out placeholders
         activeAlbumImages = allItems.filter(item => {
             const itemImg = item.querySelector('img');
             return itemImg && itemImg.style.display !== 'none';
@@ -847,7 +823,6 @@ function openLightbox(itemEl, imgSrc, captionText) {
     updateLightboxNavArrows();
 }
 
-// 5. Update visibility of lightbox navigation arrows
 function updateLightboxNavArrows() {
     const prevBtn = document.getElementById('lightboxPrev');
     const nextBtn = document.getElementById('lightboxNext');
@@ -862,7 +837,6 @@ function updateLightboxNavArrows() {
     }
 }
 
-// 6. Navigate lightbox images
 function navigateLightbox(direction) {
     if (activeAlbumImages.length <= 1) return;
     
@@ -885,7 +859,6 @@ function navigateLightbox(direction) {
                 lightboxImg.src = nextImg.src;
                 lightboxImg.style.opacity = 1;
                 
-                // Keep caption hidden since caption is empty in inner grids
                 if (caption) {
                     caption.style.display = 'none';
                 }
@@ -894,12 +867,10 @@ function navigateLightbox(direction) {
     }
 }
 
-// 7. Close full-screen lightbox
 function closeLightbox(event) {
     const lightbox = document.getElementById('photoLightbox');
     if (!lightbox) return;
     
-    // Close if clicked close button, outside elements, or overlay background
     if (
         event.target.id === 'photoLightbox' || 
         event.target.classList.contains('lightbox-close') || 
@@ -916,7 +887,6 @@ function init3DTiltEffect() {
     const frames = document.querySelectorAll('.gallery-frame');
     
     frames.forEach(frame => {
-        // Create glare element dynamically if it doesn't exist
         let glare = frame.querySelector('.frame-glare');
         if (!glare) {
             glare = document.createElement('div');
@@ -924,30 +894,37 @@ function init3DTiltEffect() {
             frame.appendChild(glare);
         }
 
+        // Cache the bounding client rect on mouseenter to prevent layout thrashing on mousemove
+        let rect = null;
+
+        frame.addEventListener('mouseenter', () => {
+            rect = frame.getBoundingClientRect();
+            frame.style.transition = 'none';
+        });
+
         frame.addEventListener('mousemove', (e) => {
-            // Cancel tilt calculation if this frame is currently expanded/active
             if (frame.classList.contains('active-frame')) {
                 frame.style.transform = '';
                 glare.style.opacity = '0';
                 return;
             }
 
-            const rect = frame.getBoundingClientRect();
-            const x = e.clientX - rect.left; // mouse X relative to card bounds
-            const y = e.clientY - rect.top;  // mouse Y relative to card bounds
+            if (!rect) {
+                rect = frame.getBoundingClientRect();
+            }
+
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             
             const width = rect.width;
             const height = rect.height;
             
-            // Calculate tilt angle based on hover positioning (max tilt 10 degrees)
             const maxTilt = 10;
-            const tiltX = ((y / height) - 0.5) * -maxTilt * 2; // X-axis tilt (tilt up/down)
-            const tiltY = ((x / width) - 0.5) * maxTilt * 2;  // Y-axis tilt (tilt left/right)
+            const tiltX = ((y / height) - 0.5) * -maxTilt * 2;
+            const tiltY = ((x / width) - 0.5) * maxTilt * 2;
             
-            // Rotate card around perspective field and scale up slightly on hover
             frame.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
             
-            // Move glare radial gradient spotlight directly with cursor coordinates
             const glareX = (x / width) * 100;
             const glareY = (y / height) * 100;
             glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.16) 0%, transparent 65%)`;
@@ -955,17 +932,10 @@ function init3DTiltEffect() {
         });
 
         frame.addEventListener('mouseleave', () => {
-            // Smoothly ease card back to flat baseline orientation on hover exit
             frame.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
             frame.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
             glare.style.opacity = '0';
-        });
-
-        frame.addEventListener('mouseenter', () => {
-            // Remove transitions temporarily on hover entry to prevent layout rendering stutter
-            frame.style.transition = 'none';
+            rect = null; // Clear cached rect
         });
     });
 }
-
-
