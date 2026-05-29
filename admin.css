@@ -189,6 +189,33 @@ textarea {
     gap: 0.5rem;
 }
 
+.file-upload-wrapper {
+    margin-top: 0.5rem;
+}
+
+.file-input {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px dashed var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+}
+.file-input::file-selector-button {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 1rem;
+    font-weight: 500;
+}
+.file-input::file-selector-button:hover {
+    background: #2563eb;
+}
+
 .dashboard-footer {
     display: flex;
     align-items: center;

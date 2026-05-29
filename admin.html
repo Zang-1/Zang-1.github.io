@@ -59,10 +59,16 @@
                     <div class="input-group">
                         <label>Cover Image URL</label>
                         <input type="text" id="billiards-cover" placeholder="assets/images/... or https://...">
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="billiards-cover-file" accept="image/*" class="file-input">
+                        </div>
                     </div>
                     <div class="input-group">
                         <label>Inside Images (One URL per line)</label>
                         <textarea id="billiards-images" rows="6"></textarea>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="billiards-images-file" accept="image/*" multiple class="file-input">
+                        </div>
                     </div>
                 </div>
 
@@ -72,10 +78,16 @@
                     <div class="input-group">
                         <label>Cover Image URL</label>
                         <input type="text" id="motorcycles-cover" placeholder="assets/images/... or https://...">
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="motorcycles-cover-file" accept="image/*" class="file-input">
+                        </div>
                     </div>
                     <div class="input-group">
                         <label>Inside Images (One URL per line)</label>
                         <textarea id="motorcycles-images" rows="6"></textarea>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="motorcycles-images-file" accept="image/*" multiple class="file-input">
+                        </div>
                     </div>
                 </div>
 
@@ -85,10 +97,16 @@
                     <div class="input-group">
                         <label>Cover Image URL</label>
                         <input type="text" id="life-cover" placeholder="assets/images/... or https://...">
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="life-cover-file" accept="image/*" class="file-input">
+                        </div>
                     </div>
                     <div class="input-group">
                         <label>Inside Images (One URL per line)</label>
                         <textarea id="life-images" rows="6"></textarea>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="life-images-file" accept="image/*" multiple class="file-input">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,6 +123,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>

@@ -12,6 +12,7 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 // DOM Elements
 const loader = document.getElementById('loader');
@@ -99,36 +100,70 @@ function populateForm(data) {
     }
 }
 
+// Helper to upload a single file
+async function uploadFile(file, folder) {
+    const fileName = `${Date.now()}_${file.name}`;
+    const storageRef = storage.ref(`portfolio/${folder}/${fileName}`);
+    await storageRef.put(file);
+    return await storageRef.getDownloadURL();
+}
+
 // Save Data to Firestore
 dataForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const saveBtn = document.getElementById('save-btn');
     const originalText = saveBtn.innerHTML;
-    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading & Saving...';
     saveBtn.disabled = true;
-    saveStatus.textContent = '';
+    saveStatus.textContent = 'Please wait, uploading images...';
+    saveStatus.style.color = 'var(--text-color)';
 
     const musicLines = document.getElementById('music-links').value.split('\n').map(s => s.trim()).filter(s => s);
     
-    const parseGallery = (cat) => {
+    const parseGallery = async (cat) => {
+        let coverUrl = document.getElementById(`${cat}-cover`).value.trim();
+        const coverFile = document.getElementById(`${cat}-cover-file`).files[0];
+        if (coverFile) {
+            coverUrl = await uploadFile(coverFile, cat);
+            document.getElementById(`${cat}-cover`).value = coverUrl; // Update UI
+        }
+
+        let images = document.getElementById(`${cat}-images`).value.split('\n').map(s => s.trim()).filter(s => s);
+        const imageFiles = document.getElementById(`${cat}-images-file`).files;
+        if (imageFiles.length > 0) {
+            for (let i = 0; i < imageFiles.length; i++) {
+                const url = await uploadFile(imageFiles[i], cat);
+                images.push(url);
+            }
+            document.getElementById(`${cat}-images`).value = images.join('\n'); // Update UI
+        }
+
         return {
-            cover: document.getElementById(`${cat}-cover`).value.trim(),
-            images: document.getElementById(`${cat}-images`).value.split('\n').map(s => s.trim()).filter(s => s)
+            cover: coverUrl,
+            images: images
         };
     };
 
-    const newData = {
-        music: musicLines,
-        gallery: {
-            billiards: parseGallery('billiards'),
-            motorcycles: parseGallery('motorcycles'),
-            life: parseGallery('life')
-        }
-    };
-
     try {
+        const newData = {
+            music: musicLines,
+            gallery: {
+                billiards: await parseGallery('billiards'),
+                motorcycles: await parseGallery('motorcycles'),
+                life: await parseGallery('life')
+            }
+        };
+
         await db.collection('portfolio').doc('content').set(newData);
+        
+        // Clear file inputs
+        ['billiards', 'motorcycles', 'life'].forEach(cat => {
+            document.getElementById(`${cat}-cover-file`).value = '';
+            document.getElementById(`${cat}-images-file`).value = '';
+        });
+
         saveStatus.textContent = 'Changes saved successfully!';
+        saveStatus.style.color = 'var(--success-color)';
         setTimeout(() => saveStatus.textContent = '', 3000);
     } catch (error) {
         console.error("Error saving data:", error);
