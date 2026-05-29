@@ -2111,7 +2111,9 @@ img {
 .swiper-slide {
     width: 280px;
     height: 352px;
-    transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Fix: Let Swiper handle duration inline, but ensure both transform and filter are transitionable */
+    transition-property: transform, filter;
+    transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
     will-change: transform, filter;
     transform-style: preserve-3d;
     backface-visibility: hidden;
