@@ -946,3 +946,30 @@ function init3DTiltEffect() {
         });
     });
 }
+
+// Initialize Swiper for Music Section
+if (typeof Swiper !== 'undefined') {
+    const musicSwiper = new Swiper('.music-swiper', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loop: true,
+        speed: 600, // Balanced speed for smooth but snappy feel
+        coverflowEffect: {
+            rotate: 40,
+            stretch: 0,
+            depth: 150,
+            modifier: 1,
+            slideShadows: false, // Turn off slideShadows as they can cause lag over iframes
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        }
+    });
+}
