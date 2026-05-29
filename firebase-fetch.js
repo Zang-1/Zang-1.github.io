@@ -46,7 +46,22 @@ if (typeof firebase !== 'undefined') {
         swiperWrapper.innerHTML = '';
 
         // Add new slides from Firebase
-        musicUrls.forEach(url => {
+        musicUrls.forEach(inputUrl => {
+            let url = inputUrl.trim();
+            
+            // 1. If user pasted the whole <iframe> tag, extract the src
+            const srcMatch = url.match(/src=["'](.*?)["']/);
+            if (srcMatch) {
+                url = srcMatch[1];
+            }
+            
+            // 2. If user pasted a normal Spotify link instead of an embed link
+            if (url.includes('spotify.com/track/') && !url.includes('/embed/')) {
+                url = url.replace('spotify.com/track/', 'spotify.com/embed/track/');
+            } else if (url.includes('spotify.com/playlist/') && !url.includes('/embed/')) {
+                url = url.replace('spotify.com/playlist/', 'spotify.com/embed/playlist/');
+            }
+
             const slide = document.createElement('div');
             slide.className = 'swiper-slide';
             slide.innerHTML = `
