@@ -57,6 +57,9 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-actions">
+                <a href="admin.html" class="theme-toggle" aria-label="Admin" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem;" title="Admin Dashboard">
+                    <i class="fas fa-user-shield"></i>
+                </a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <i class="fas fa-moon" id="themeIcon"></i>
                 </button>
@@ -680,6 +683,11 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js?v=3.2"></script>
+
+    <!-- Firebase Dynamic Data -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-fetch.js"></script>
 </body>
 
 </html>
