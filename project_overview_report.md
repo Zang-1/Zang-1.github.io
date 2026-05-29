@@ -142,6 +142,8 @@ Tập trung vào hoàn thiện trải nghiệm kết nối thông minh, tối ư
 | **version 3.0.2** | `5476c56` | **Refactor Soundwave**| Đưa hoạt ảnh sóng âm thanh của nhạc về vòng lặp liên tục và tinh giản cấu trúc mã nguồn Iframe của Spotify. | Tải trang nhanh hơn, giảm tải hoạt động CPU. |
 | **version 3.1** | `05432f1` | **Perf Navigation** | Nâng cấp menu điều hướng tự động trượt bằng `IntersectionObserver`. Sử dụng thuộc tính `translate3d` để kích hoạt tăng tốc phần cứng phần menu. | Triệt tiêu hoàn toàn độ trễ layout thrashing khi cuộn. Menu lướt mượt mà. |
 | **version 3.2** | `0d308f7` | **Feat & UI Glow** | Bổ sung widget đồng hồ Saigon Time dạng `23:59`. Đồng nhất cường độ phát sáng hover cho 2 chiếc badge bằng hiệu ứng quầng sáng `box-shadow` đồng điệu màu sắc (Green Glow và Cyan Glow). | Giao diện Hero đạt sự cân bằng thẩm mỹ, mang đậm hơi thở công nghệ cao. |
+| **version 3.3** | `1a6b475` | **Nav & Footer Polish** | Nâng cấp hoạt ảnh viên thuốc trượt (Nav Pill) với hiệu ứng glow bóng mờ, bổ sung nút "Home" và phủ lớp kính mờ (Glassmorphism) cùng viền sáng cho khu vực Footer. | Giao diện tổng thể liền mạch, phần viền các khối nổi bật và điều hướng thân thiện hơn. |
+| **version 3.4** | `b343118` | **3D Music Coverflow** | Chuyển đổi grid âm nhạc thành dạng thẻ đứng xoay 3D (Coverflow) bằng Swiper.js, ép tăng tốc phần cứng GPU (`translateZ(0)`) cho các thẻ iframe Spotify và sử dụng dải màu album tự động. | Trải nghiệm tương tác với danh sách nhạc mượt mà như native app, xóa bỏ hoàn toàn giật lag khi chuyển cảnh 3D. |
 
 ---
 
