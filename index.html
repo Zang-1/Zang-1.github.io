@@ -123,7 +123,7 @@
             <div class="hero-avatar-wrapper">
                 <div class="avatar-glow"></div>
                 <div class="avatar-ring"></div>
-                <img src="assets/avatar.png" alt="Bao Giang" class="hero-avatar">
+                <img src="assets/avatar.png" alt="Bao Giang" class="hero-avatar" id="hero-avatar-img">
             </div>
         </div>
         <div class="scroll-indicator">
@@ -158,36 +158,7 @@
                 <!-- ===== SPOTIFY 3D CAROUSEL ===== -->
                 <div class="swiper music-swiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="spotify-embed">
-                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1Qd4wSptT65JbVVT0ro9V2?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="spotify-embed">
-                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5sGQvC7sIYbYjD1WSLS0bE?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="spotify-embed">
-                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4oHNffwl7J3lMBNjvcYue2?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="spotify-embed">
-                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6fHXfm4EVM3pEiMdQs9Vjm?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="spotify-embed">
-                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0IJjyCURQo8DOmtlnRtmiA?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="spotify-embed">
-                                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0o0ppsUl9WXqULqdLSDdBs?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                            </div>
-                        </div>
+                        <!-- Dynamic content from Firebase -->
                     </div>
                     <!-- Add Navigation -->
                     <div class="swiper-button-next"></div>
@@ -481,120 +452,17 @@
 
                 <!-- Billiards Photos -->
                 <div class="photo-grid" id="grid-billiards" style="display: none;">
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/myself/z7867573107848_dcf3f29c4abe184f09f029ab12a3efd0.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/myself/z7867573107848_dcf3f29c4abe184f09f029ab12a3efd0.jpg"
-                            alt="Myself Slot 1" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/myself/z7867573444580_04097ab2a1c4508835f7a1bf8ea76477.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/myself/z7867573444580_04097ab2a1c4508835f7a1bf8ea76477.jpg"
-                            alt="Myself Slot 2" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/myself/z7867573602287_ff167f5e8c4794c99c10e7d627d78b5c.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/myself/z7867573602287_ff167f5e8c4794c99c10e7d627d78b5c.jpg"
-                            alt="Myself Slot 3" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/myself/z7867573719012_62a3322652b05f7a345d59b34a09568c.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/myself/z7867573719012_62a3322652b05f7a345d59b34a09568c.jpg"
-                            alt="Myself Slot 4" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/myself/z7867573806282_655adbbe6d1530f637fd2ca4f8667a3d.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/myself/z7867573806282_655adbbe6d1530f637fd2ca4f8667a3d.jpg"
-                            alt="Myself Slot 5" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
+                    <!-- Dynamic content -->
                 </div>
 
                 <!-- Motorcycles Photos -->
                 <div class="photo-grid" id="grid-motorcycles" style="display: none;">
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/motorcycles/z7867552172506_9c6e384f5cd648544b06229bf0e5b4db.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/motorcycles/z7867552172506_9c6e384f5cd648544b06229bf0e5b4db.jpg"
-                            alt="Motorcycles Slot 1" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/motorcycles/z7867552244991_ecc590532456411c3c9cf17ea10d964c.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/motorcycles/z7867552244991_ecc590532456411c3c9cf17ea10d964c.jpg"
-                            alt="Motorcycles Slot 2" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/motorcycles/z7867552327524_782dd64e3b53bc6c7897175d8f0ee8ec.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/motorcycles/z7867552327524_782dd64e3b53bc6c7897175d8f0ee8ec.jpg"
-                            alt="Motorcycles Slot 3" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/motorcycles/z7867552394139_4e9d186880fdba759b9682afef93d48d.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/motorcycles/z7867552394139_4e9d186880fdba759b9682afef93d48d.jpg"
-                            alt="Motorcycles Slot 4" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/motorcycles/A65093D4-FECD-4512-BFAF-66B3026AA4CD.png', '')">
-                        <img loading="lazy" src="assets/images/inside/motorcycles/A65093D4-FECD-4512-BFAF-66B3026AA4CD.png"
-                            alt="Motorcycles Slot 5" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item" onclick="openLightbox(this, 'assets/images/inside/motorcycles/IMG_4768.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/motorcycles/IMG_4768.jpg" alt="Motorcycles Slot 6"
-                            onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item" onclick="openLightbox(this, 'assets/images/inside/motorcycles/IMG_4765.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/motorcycles/IMG_4765.jpg" alt="Motorcycles Slot 7"
-                            onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
+                    <!-- Dynamic content -->
                 </div>
 
                 <!-- Life & Vlog Photos -->
                 <div class="photo-grid" id="grid-life" style="display: none;">
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/daily/z7867581308309_a22d233f605620e2084b12fa083e5064.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/daily/z7867581308309_a22d233f605620e2084b12fa083e5064.jpg"
-                            alt="Life Slot 1" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/covers/z7867581724712_7ad3960bcd308860b36161d9aa5d5942.jpg', '')">
-                        <img loading="lazy" src="assets/images/covers/z7867581724712_7ad3960bcd308860b36161d9aa5d5942.jpg"
-                            alt="Life Slot 2" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/daily/z7867582189241_36e308db949ac7c4e1975ccee4eb719e.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/daily/z7867582189241_36e308db949ac7c4e1975ccee4eb719e.jpg"
-                            alt="Life Slot 3" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/daily/z7867582548615_99a5a2c4e851e04fa3f0bc78a559af8b.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/daily/z7867582548615_99a5a2c4e851e04fa3f0bc78a559af8b.jpg"
-                            alt="Life Slot 4" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/daily/z7867582694625_021c108d80db9e0b8514aa86a7f926aa.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/daily/z7867582694625_021c108d80db9e0b8514aa86a7f926aa.jpg"
-                            alt="Life Slot 5" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                    <div class="gallery-item"
-                        onclick="openLightbox(this, 'assets/images/inside/daily/z7867582846706_1852ddeb6554ff6c38b5ee2584230db4.jpg', '')">
-                        <img loading="lazy" src="assets/images/inside/daily/z7867582846706_1852ddeb6554ff6c38b5ee2584230db4.jpg"
-                            alt="Life Slot 6" onerror="handleImageError(this, '')">
-                        <div class="item-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
+                    <!-- Dynamic content -->
                 </div>
             </div>
         </div>

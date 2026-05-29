@@ -13,14 +13,20 @@ if (typeof firebase !== 'undefined') {
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    async function fetchAndInjectContent() {
-        try {
-            const docRef = db.collection('portfolio').doc('content');
-            const docSnap = await docRef.get();
-
+    function setupRealtimeListener() {
+        const docRef = db.collection('portfolio').doc('content');
+        docRef.onSnapshot((docSnap) => {
             if (docSnap.exists) {
                 const data = docSnap.data();
                 
+                // 0. Update Avatar
+                if (data.avatar) {
+                    const avatarImg = document.getElementById('hero-avatar-img');
+                    if (avatarImg) {
+                        avatarImg.src = data.avatar;
+                    }
+                }
+
                 // 1. Update Music Sections
                 if (data.music && Array.isArray(data.music)) {
                     updateMusicLinks(data.music);
@@ -33,9 +39,9 @@ if (typeof firebase !== 'undefined') {
                     updateGallery('life', data.gallery.life);
                 }
             }
-        } catch (error) {
-            console.error("Error fetching content from Firebase:", error);
-        }
+        }, (error) => {
+            console.error("Error listening to Firebase:", error);
+        });
     }
 
     function updateMusicLinks(musicUrls) {
@@ -136,5 +142,5 @@ if (typeof firebase !== 'undefined') {
     }
 
     // Run immediately
-    fetchAndInjectContent();
+    setupRealtimeListener();
 }
