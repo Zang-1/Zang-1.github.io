@@ -226,3 +226,36 @@ textarea {
     font-weight: 500;
     color: var(--accent-green);
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .glass-card {
+        padding: 1.2rem;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.2rem;
+    }
+    .dashboard-header h2 {
+        font-size: 1.3rem;
+    }
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .user-email {
+        font-size: 0.8rem;
+        word-break: break-all;
+        margin-right: 0.5rem;
+    }
+    .dashboard-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.2rem;
+    }
+    .btn-success {
+        width: 100%;
+    }
+}
