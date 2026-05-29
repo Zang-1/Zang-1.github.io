@@ -47,7 +47,7 @@ const allNavLinks = document.querySelectorAll('.nav-link');
 const activePill = document.getElementById('navActivePill');
 
 // Update active sliding indicator pill on desktop
-function updateActivePillPosition(activeLink) {
+function updateActivePillPosition(targetLink) {
     if (!activePill) return;
     
     if (window.innerWidth <= 900) {
@@ -55,8 +55,8 @@ function updateActivePillPosition(activeLink) {
         return;
     }
     
-    if (activeLink && activeLink.classList.contains('active')) {
-        const linkRect = activeLink.getBoundingClientRect();
+    if (targetLink) {
+        const linkRect = targetLink.getBoundingClientRect();
         const navLinksRect = navLinks.getBoundingClientRect();
         
         const relativeLeft = linkRect.left - navLinksRect.left;
@@ -64,7 +64,14 @@ function updateActivePillPosition(activeLink) {
         
         activePill.style.left = `${relativeLeft}px`;
         activePill.style.width = `${linkWidth}px`;
-        activePill.style.opacity = '1';
+        
+        if (!targetLink.classList.contains('active')) {
+            activePill.style.transform = 'translateY(-50%) scale(0.95)';
+            activePill.style.opacity = '0.5';
+        } else {
+            activePill.style.transform = 'translateY(-50%) scale(1)';
+            activePill.style.opacity = '1';
+        }
     } else {
         activePill.style.opacity = '0';
     }
