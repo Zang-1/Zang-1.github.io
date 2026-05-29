@@ -206,11 +206,16 @@ cropCancelBtn.addEventListener('click', () => {
 cropSaveBtn.addEventListener('click', () => {
     if (!cropper) return;
     
+    // Tối ưu kích thước: Avatar nhỏ hơn ảnh Cover
+    const isAvatar = currentCropTarget.type === 'avatar';
     const canvas = cropper.getCroppedCanvas({
-        maxWidth: 1920,
-        maxHeight: 1920,
+        maxWidth: isAvatar ? 512 : 1280,
+        maxHeight: isAvatar ? 512 : 1280,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
     });
     
+    // Nén ảnh xuống chất lượng 0.8 để nhẹ hơn, upload nhanh hơn
     canvas.toBlob((blob) => {
         croppedBlobs[currentCropTarget.id] = blob;
         document.getElementById(currentCropTarget.id).value = `[Cropped Image Ready to Save]`;
@@ -219,7 +224,7 @@ cropSaveBtn.addEventListener('click', () => {
         document.body.style.overflow = ''; // Restore scrolling
         cropper.destroy(); 
         cropper = null;
-    }, 'image/jpeg', 0.9);
+    }, 'image/jpeg', 0.8);
 });
 
 // Helper to upload a Blob (from Cropper)
