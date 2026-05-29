@@ -169,10 +169,20 @@ function initCropperForInput(fileInputId, urlInputId, type) {
                 
                 cropper = new Cropper(cropperImage, {
                     aspectRatio: aspectRatio,
-                    viewMode: 2,
-                    background: false,
-                    autoCropArea: 0.8
+                    viewMode: 1,
+                    dragMode: 'move', // Move image instead of drawing new crop boxes
+                    background: true,
+                    autoCropArea: 0.9,
+                    responsive: true,
+                    guides: true,
+                    highlight: false,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: false
                 });
+                
+                // Prevent body scrolling on mobile while cropping
+                document.body.style.overflow = 'hidden';
             };
             reader.readAsDataURL(file);
         }
@@ -186,6 +196,7 @@ initCropperForInput('life-cover-file', 'life-cover', 'cover');
 
 cropCancelBtn.addEventListener('click', () => {
     cropperModal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
     if (cropper) { cropper.destroy(); cropper = null; }
     if (currentCropTarget) {
         document.getElementById(currentCropTarget.fileId).value = ''; // Reset file input
@@ -205,6 +216,7 @@ cropSaveBtn.addEventListener('click', () => {
         document.getElementById(currentCropTarget.id).value = `[Cropped Image Ready to Save]`;
         
         cropperModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
         cropper.destroy(); 
         cropper = null;
     }, 'image/jpeg', 0.9);
