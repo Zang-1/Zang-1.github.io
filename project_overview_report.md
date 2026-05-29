@@ -145,6 +145,7 @@ Tập trung vào hoàn thiện trải nghiệm kết nối thông minh, tối ư
 | **version 3.3** | `1a6b475` | **Nav & Footer Polish** | Nâng cấp hoạt ảnh viên thuốc trượt (Nav Pill) với hiệu ứng glow bóng mờ, bổ sung nút "Home" và phủ lớp kính mờ (Glassmorphism) cùng viền sáng cho khu vực Footer. | Giao diện tổng thể liền mạch, phần viền các khối nổi bật và điều hướng thân thiện hơn. |
 | **version 3.4** | `b343118` | **3D Music Coverflow** | Chuyển đổi grid âm nhạc thành dạng thẻ đứng xoay 3D (Coverflow) bằng Swiper.js, ép tăng tốc phần cứng GPU (`translateZ(0)`) cho các thẻ iframe Spotify và sử dụng dải màu album tự động. | Trải nghiệm tương tác với danh sách nhạc mượt mà như native app, xóa bỏ hoàn toàn giật lag khi chuyển cảnh 3D. |
 | **version 3.5** | `f574241` | **Music Swipe & Drag Fix** | Bổ sung lớp phủ vô hình (transparent pseudo-element overlay) lên phần trên của iframe Spotify để ngăn chặn hiện tượng iframe nuốt sự kiện cảm ứng/chuột. | Kích hoạt lại khả năng vuốt/chuyển bài mượt mà trên điện thoại và kéo thả bằng chuột trên laptop, đồng thời vẫn giữ được khả năng tương tác với nút Play ở góc dưới. |
+| **version 3.6** | `TBD` | **Global Performance Optimization** | Áp dụng `loading="lazy"` cho tất cả hình ảnh Gallery. Tối ưu hóa vòng lặp sự kiện `scroll` bằng `requestAnimationFrame`. Rà soát và tinh giản vòng đời hiển thị DOM. | Trang web tải nhanh hơn rõ rệt (giảm tải ảnh nền), thanh điều hướng cuộn mượt mà không gây quá tải CPU (layout thrashing). |
 
 ---
 

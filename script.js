@@ -138,18 +138,24 @@ allNavLinks.forEach(link => {
     });
 });
 
-// Performance optimized scroll header transition
+// Performance optimized scroll header transition with requestAnimationFrame
+let ticking = false;
 window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    
-    if (scrollY > 50) {
-        if (!navbar.classList.contains('scrolled')) {
-            navbar.classList.add('scrolled');
-        }
-    } else {
-        if (navbar.classList.contains('scrolled')) {
-            navbar.classList.remove('scrolled');
-        }
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            if (scrollY > 50) {
+                if (!navbar.classList.contains('scrolled')) {
+                    navbar.classList.add('scrolled');
+                }
+            } else {
+                if (navbar.classList.contains('scrolled')) {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+            ticking = false;
+        });
+        ticking = true;
     }
 }, { passive: true });
 
