@@ -144,6 +144,7 @@ Tập trung vào hoàn thiện trải nghiệm kết nối thông minh, tối ư
 | **version 3.2** | `0d308f7` | **Feat & UI Glow** | Bổ sung widget đồng hồ Saigon Time dạng `23:59`. Đồng nhất cường độ phát sáng hover cho 2 chiếc badge bằng hiệu ứng quầng sáng `box-shadow` đồng điệu màu sắc (Green Glow và Cyan Glow). | Giao diện Hero đạt sự cân bằng thẩm mỹ, mang đậm hơi thở công nghệ cao. |
 | **version 3.3** | `1a6b475` | **Nav & Footer Polish** | Nâng cấp hoạt ảnh viên thuốc trượt (Nav Pill) với hiệu ứng glow bóng mờ, bổ sung nút "Home" và phủ lớp kính mờ (Glassmorphism) cùng viền sáng cho khu vực Footer. | Giao diện tổng thể liền mạch, phần viền các khối nổi bật và điều hướng thân thiện hơn. |
 | **version 3.4** | `b343118` | **3D Music Coverflow** | Chuyển đổi grid âm nhạc thành dạng thẻ đứng xoay 3D (Coverflow) bằng Swiper.js, ép tăng tốc phần cứng GPU (`translateZ(0)`) cho các thẻ iframe Spotify và sử dụng dải màu album tự động. | Trải nghiệm tương tác với danh sách nhạc mượt mà như native app, xóa bỏ hoàn toàn giật lag khi chuyển cảnh 3D. |
+| **version 3.5** | `TBD` | **Music Swipe & Drag Fix** | Bổ sung lớp phủ vô hình (transparent pseudo-element overlay) lên phần trên của iframe Spotify để ngăn chặn hiện tượng iframe nuốt sự kiện cảm ứng/chuột. | Kích hoạt lại khả năng vuốt/chuyển bài mượt mà trên điện thoại và kéo thả bằng chuột trên laptop, đồng thời vẫn giữ được khả năng tương tác với nút Play ở góc dưới. |
 
 ---
 

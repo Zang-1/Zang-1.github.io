@@ -2327,6 +2327,23 @@ img {
     transform: translateZ(0);
     backface-visibility: hidden;
     overflow: hidden;
+    position: relative; /* Added to position the overlay */
+}
+
+/* Transparent overlay to catch swipe/drag events instead of the iframe */
+.swiper-slide .spotify-embed::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 90px); /* Covers album art, leaves play button clickable */
+    z-index: 10;
+    cursor: grab;
+}
+
+.swiper-slide .spotify-embed:active::after {
+    cursor: grabbing;
 }
 
 .swiper-slide .spotify-embed iframe {
