@@ -2144,20 +2144,10 @@ img {
     filter: blur(3px) brightness(0.5);
 }
 
-/* Transparent overlay to catch swipe/drag events instead of the iframe */
+/* Removed transparent overlay so the Spotify iframe (and its popups) are fully clickable.
+   Users can navigate the carousel using the next/prev arrows instead of dragging. */
 .swiper-slide .spotify-embed::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 90px); /* Covers album art, leaves play button clickable */
-    z-index: 10;
-    cursor: grab;
-}
-
-.swiper-slide .spotify-embed:active::after {
-    cursor: grabbing;
+    display: none;
 }
 
 .swiper-slide .spotify-embed iframe {
