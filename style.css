@@ -2111,17 +2111,16 @@ img {
 .swiper-slide {
     width: 280px;
     height: 352px;
-    /* Fix: Let Swiper handle duration inline, but ensure both transform and filter are transitionable */
-    transition-property: transform, filter;
+    /* Let Swiper handle transform duration inline */
+    transition-property: transform;
     transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: transform, filter;
+    will-change: transform;
     transform-style: preserve-3d;
     backface-visibility: hidden;
 }
 
 /* Make non-active slides faded/blurry for 3D effect */
 .swiper-slide:not(.swiper-slide-active) {
-    filter: blur(3px) brightness(0.5);
     pointer-events: none;
 }
 
@@ -2135,6 +2134,14 @@ img {
     backface-visibility: hidden;
     overflow: hidden;
     position: relative; /* Added to position the overlay */
+    /* Add independent filter transition so it remains smooth during swipe */
+    transition: filter 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: filter;
+    filter: blur(0px) brightness(1);
+}
+
+.swiper-slide:not(.swiper-slide-active) .spotify-embed {
+    filter: blur(3px) brightness(0.5);
 }
 
 /* Transparent overlay to catch swipe/drag events instead of the iframe */
